@@ -14,8 +14,8 @@
 #   limitations under the License.                                              #
 #################################################################################
 
-DELTA_PUBLISHER_TOPIC = "object_detection_delta"
 DISPLAY_IMAGE_PUBLISHER_TOPIC = "detection_display"
+INFERENCE_RESULT_PUBLISHER_TOPIC = "inference_results"
 
 SENSOR_FUSION_PKG_NS = "/sensor_fusion_pkg"
 SENSOR_FUSION_TOPIC = f"{SENSOR_FUSION_PKG_NS}/sensor_msg"
@@ -114,7 +114,7 @@ COCO_LABELS = {
 }
 
 # Can be changed to detect any of the above LABELS based on use case.
-DETECT_CLASS = "traffic light"
+DETECT_CLASSES = ["traffic light", "street sign", "stop sign"]
 
 # Confidence threshold for the object detector.
 CONFIDENCE_THRESHOLD = 0.4
