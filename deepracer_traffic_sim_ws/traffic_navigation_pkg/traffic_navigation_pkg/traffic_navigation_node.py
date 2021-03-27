@@ -38,9 +38,9 @@ from rclpy.node import Node
 from rclpy.executors import MultiThreadedExecutor
 from rclpy.qos import QoSProfile, QoSHistoryPolicy, QoSReliabilityPolicy
 
-from deepracer_interfaces_pkg.msg import ServoCtrlMsg
+from deepracer_interfaces_pkg.msg import ServoCtrlMsg, InferResultsArray
 from deepracer_interfaces_pkg.srv import SetMaxSpeedSrv
-from traffic_navigation_pkg import constants, utils
+from traffic_navigation_pkg import constants, control_utils, utils
 
 
 class TrafficNavigationNode(Node):
@@ -53,6 +53,9 @@ class TrafficNavigationNode(Node):
         super().__init__("traffic_navigation_node")
         self.get_logger().info("traffic_navigation_node started.")
 
+        # Double buffer to hold the input inferences from object detection.
+        self.inference_buffer = utils.DoubleBuffer(clear_data_on_get=True)
+
         # Creating publisher to publish action (angle and throttle).
         self.action_publisher = self.create_publisher(
             ServoCtrlMsg, constants.ACTION_PUBLISH_TOPIC, qos_profile
@@ -61,6 +64,14 @@ class TrafficNavigationNode(Node):
         # Service to dynamically set MAX_SPEED_PCT.
         self.set_max_speed_service = self.create_service(
             SetMaxSpeedSrv, constants.SET_MAX_SPEED_SERVICE_NAME, self.set_max_speed_cb
+        )
+
+        # Create subscription to object detections from the object detection node.
+        self.detection_delta_subscriber = self.create_subscription(
+            InferResultsArray,
+            constants.OBJECT_DETECTION_INFERENCE_TOPIC,
+            self.object_detection_cb,
+            qos_profile,
         )
 
         # Initializing the msg to be published.
@@ -91,6 +102,18 @@ class TrafficNavigationNode(Node):
     def thread_shutdown(self):
         """Function which sets the flag to shutdown background thread."""
         self.stop_thread = True
+
+    def object_detection_cb(self, inference):
+        """Call back for whenever detection delta for a perception
+           is received from object_detection_node.
+
+        Args:
+            inference (InferResultsArray): Message containing the inference results from the object detection node.
+        """
+
+        print(f"Received inferences: {len(inference.results)} objects")
+
+        self.inference_buffer.put(inference)
 
     def set_max_speed_cb(self, req, res):
         """Callback which dynamically sets the max_speed_pct.
@@ -131,7 +154,9 @@ class TrafficNavigationNode(Node):
             while not self.stop_thread:
                 # Get a new message to plan action.
                 # TODO: Currently do nothing, take no action.
-                msg.angle, msg.throttle = utils.get_mapped_action(1, self.max_speed_pct)
+                msg.angle, msg.throttle = control_utils.get_mapped_action(
+                    1, self.max_speed_pct
+                )
                 # Publish msg based on action planned and mapped from a new object detection.
                 self.action_publisher.publish(msg)
 

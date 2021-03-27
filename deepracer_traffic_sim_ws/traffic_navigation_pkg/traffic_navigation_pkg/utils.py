@@ -1,76 +1,108 @@
-import math
-from traffic_navigation_pkg import constants
+#################################################################################
+#   Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.          #
+#                                                                               #
+#   Licensed under the Apache License, Version 2.0 (the "License").             #
+#   You may not use this file except in compliance with the License.            #
+#   You may obtain a copy of the License at                                     #
+#                                                                               #
+#       http://www.apache.org/licenses/LICENSE-2.0                              #
+#                                                                               #
+#   Unless required by applicable law or agreed to in writing, software         #
+#   distributed under the License is distributed on an "AS IS" BASIS,           #
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    #
+#   See the License for the specific language governing permissions and         #
+#   limitations under the License.                                              #
+#################################################################################
+
+import threading
+
+#########################################################################################
+# Double Buffer.
 
 
-def get_mapped_action(action_category, max_speed_pct):
-    """Return the angle and throttle values to be published for servo.
-
-    Args:
-        action_category (int): Integer value corresponding to the action space category.
-        max_speed_pct (float): Float value ranging from 0.0 to 1.0 taken as input
-                                from maximum speed input.
-    Returns:
-        angle (float): Angle value to be published to servo.
-        throttle (float): Throttle value to be published to servo.
+class DoubleBuffer():
+    """Object type which helps to thread-safely read and write from the buffer.
     """
-    angle = constants.ACTION_SPACE[action_category][constants.ActionSpaceKeys.ANGLE]
-    categorized_throttle = constants.ACTION_SPACE[action_category][
-        constants.ActionSpaceKeys.THROTTLE
-    ]
-    throttle = get_rescaled_manual_speed(categorized_throttle, max_speed_pct)
-    return angle, throttle
+    def __init__(self, clear_data_on_get=True):
+        """Create a DoubleBuffer object.
 
+        Args:
+            clear_data_on_get (bool, optional): Flag to clear data from the queue after its read.
+                                                Defaults to True.
+        """
+        self.read_buffer = None
+        self.write_buffer = None
+        self.clear_data_on_get = clear_data_on_get
+        self.cv = threading.Condition()
 
-def get_rescaled_manual_speed(categorized_throttle, max_speed_pct):
-    """Return the non linearly rescaled speed value based on the max_speed_pct.
+    def clear(self):
+        """Helper method to clear the buffer.
+        """
+        with self.cv:
+            self.read_buffer = None
+            self.write_buffer = None
 
-    Args:
-        categorized_throttle (float): Float value ranging from -1.0 to 1.0.
-        max_speed_pct (float): Float value ranging from 0.0 to 1.0 taken as input
-                               from maximum speed input.
-    Returns:
-        float: Categorized value of the input speed.
-    """
-    # return 0.0 if categorized_throttle or maximum speed pct is 0.0.
-    if categorized_throttle == 0.0 or max_speed_pct == 0.0:
-        return 0.0
+    def put(self, data):
+        """Helper method to safely store the data in the buffer.
 
-    # get the parameter value to calculate the coefficients a, b in the equation y=ax^2+bx
-    # The lower the update_speed_scale_value parameter, higher the impact on the
-    # final mapped_speed.
-    # Hence the update_speed_scale_value parameter is inversely associated with max_speed_pct
-    # and bounded by MANUAL_SPEED_SCALE_BOUNDS.
-    # Ex: max_speed_pct = 0.5; update_speed_scale_value = 3
-    #     max_speed_pct = 1.0; update_speed_scale_value = 1
-    # Lower the update_speed_scale_value: categorized_throttle value gets mapped to
-    # higher possible values.
-    #   Example: update_speed_scale_value = 1.0;
-    #            categorized_throttle = 0.8 ==> mapped_speed = 0.992
-    # Higher the update_speed_scale_value: categorized_throttle value gets mapped to
-    # lower possible values.
-    #   Example: update_speed_scale_value = 3.0;
-    #            categorized_throttle = 0.8 ==> mapped_speed = 0.501
+        Args:
+            data (Any): The object that is to be stored.
+        """
+        with self.cv:
+            self.write_buffer = data
+            self.write_buffer, self.read_buffer = self.read_buffer, self.write_buffer
+            self.cv.notify()
 
-    inverse_max_speed_pct = 1 - max_speed_pct
-    update_speed_scale_value = constants.MANUAL_SPEED_SCALE_BOUNDS[
-        0
-    ] + inverse_max_speed_pct * (
-        constants.MANUAL_SPEED_SCALE_BOUNDS[1] - constants.MANUAL_SPEED_SCALE_BOUNDS[0]
-    )
-    speed_mapping_coefficients = dict()
+    def get(self, block=True):
+        """Helper method to safely read the data from the buffer.
 
-    # recreate the mapping coefficients for the non-linear equation ax^2 + bx based on
-    # the update_speed_scale_value.
-    # These coefficents map the [update_speed_scale_value, update_speed_scale_value/2]
-    # values to DEFAULT_SPEED_SCALE values [1.0, 0.8].
-    speed_mapping_coefficients["a"] = (1.0 / update_speed_scale_value ** 2) * (
-        2.0 * constants.DEFAULT_SPEED_SCALES[0]
-        - 4.0 * constants.DEFAULT_SPEED_SCALES[1]
-    )
-    speed_mapping_coefficients["b"] = (1.0 / update_speed_scale_value) * (
-        4.0 * constants.DEFAULT_SPEED_SCALES[1] - constants.DEFAULT_SPEED_SCALES[0]
-    )
-    return math.copysign(1.0, categorized_throttle) * (
-        speed_mapping_coefficients["a"] * abs(categorized_throttle) ** 2
-        + speed_mapping_coefficients["b"] * abs(categorized_throttle)
-    )
+        Args:
+            block (bool, optional): Flag set to wait for the new data if read_buffer is empty.
+                                    Defaults to True.
+
+        Raises:
+            DoubleBuffer.Empty: Exception if returning empty read buffer without waiting for
+                                new data.
+
+        Returns:
+            Any: Data stored in the buffer.
+        """
+        with self.cv:
+            if not block:
+                if self.read_buffer is None:
+                    raise DoubleBuffer.Empty
+            else:
+                while self.read_buffer is None:
+                    self.cv.wait()
+            data = self.read_buffer
+            if self.clear_data_on_get:
+                self.read_buffer = None
+            return data
+
+    def get_nowait(self):
+        """Wrapper method to return the data stored in buffer without waiting for new data.
+
+        Returns:
+            Any: Data stored in the buffer.
+        """
+        return self.get(block=False)
+
+    def is_empty(self):
+        """Wrapper method to check if buffer has new data.
+
+        Returns:
+            (bool): Whether buffer is empty or not
+        """
+        with self.cv:
+            if self.read_buffer is None:
+                return True
+            else:
+                return False
+
+    class Empty(Exception):
+        """Custom Exception to identify if an attempt was made to read from an empty buffer.
+
+        Args:
+            Exception (Exception): Inherits from Exception class.
+        """
+        pass

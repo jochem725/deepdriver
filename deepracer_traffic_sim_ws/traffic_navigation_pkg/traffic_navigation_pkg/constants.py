@@ -18,36 +18,38 @@ ACTION_PUBLISH_TOPIC = "traffic_drive"
 SET_MAX_SPEED_SERVICE_NAME = "set_max_speed"
 
 OBJECT_DETECTION_PKG_NS = "/object_detection_pkg"
-OBJECT_DETECTION_DELTA_TOPIC = f"{OBJECT_DETECTION_PKG_NS}/object_detection_delta"
+OBJECT_DETECTION_INFERENCE_TOPIC = f"{OBJECT_DETECTION_PKG_NS}/inference_results"
 
-class DeltaValueMap():
+
+class DeltaValueMap:
     """Class with the delta values mapping to action brackets
-       Impact of the deltas on actions can be understood from the README.
-       TODO: Link the README here.
+    Impact of the deltas on actions can be understood from the README.
+    TODO: Link the README here.
 
-       Experiment results with object placed at different positions wrt camera:
+    Experiment results with object placed at different positions wrt camera:
 
-                               <-Reverse->    <-No Action->   <-Forward->
+                            <-Reverse->    <-No Action->   <-Forward->
 
-       LR/        |   Ahead->        30 cm    60 cm   90 cm   120 cm  150 cm
-       --------------------------------------------------------------------
-       45 cm      |              |
-       Left       | delta_x      |    N/A     -0.37   -0.33   -0.25   -0.22
-                  | delta_y      |    N/A     -0.06   -0.11   -0.14   -0.15
-       15 cm      |              |
-       Left       | delta_x      |   -0.25    -0.20   -0.13   -0.12   -0.09
-                  | delta_y      |    0.11    -0.06   -0.11   -0.14   -0.15
-       0 cm       |              |
-       Left/Right | delta_x      |       0        0       0       0       0
-                  | delta_y      |    0.11    -0.06   -0.11   -0.14   -0.15
-       15 cm      |              |
-       Right      | delta_x      |    0.25     0.20    0.13    0.12    0.09
-                  | delta_y      |    0.11    -0.06   -0.11   -0.14   -0.15
-       45 cm      |              |
-       Right      | delta_x      |    N/A      0.37    0.33    0.25    0.22
-                  | delta_y      |    N/A     -0.06   -0.11   -0.14   -0.15
+    LR/        |   Ahead->        30 cm    60 cm   90 cm   120 cm  150 cm
+    --------------------------------------------------------------------
+    45 cm      |              |
+    Left       | delta_x      |    N/A     -0.37   -0.33   -0.25   -0.22
+               | delta_y      |    N/A     -0.06   -0.11   -0.14   -0.15
+    15 cm      |              |
+    Left       | delta_x      |   -0.25    -0.20   -0.13   -0.12   -0.09
+               | delta_y      |    0.11    -0.06   -0.11   -0.14   -0.15
+    0 cm       |              |
+    Left/Right | delta_x      |       0        0       0       0       0
+               | delta_y      |    0.11    -0.06   -0.11   -0.14   -0.15
+    15 cm      |              |
+    Right      | delta_x      |    0.25     0.20    0.13    0.12    0.09
+               | delta_y      |    0.11    -0.06   -0.11   -0.14   -0.15
+    45 cm      |              |
+    Right      | delta_x      |    N/A      0.37    0.33    0.25    0.22
+               | delta_y      |    N/A     -0.06   -0.11   -0.14   -0.15
 
     """
+
     REVERSE_DELTA_Y = 0.11
     FORWARD_DELTA_Y = -0.14
     REVERSE_RIGHT_DELTA_X = -0.25
@@ -58,20 +60,21 @@ class DeltaValueMap():
     FORWARD_FAST_LEFT_DELTA_X = -0.33
 
 
-class ActionSpaceKeys():
-    """Class with keys for the action space.
-    """
+class ActionSpaceKeys:
+    """Class with keys for the action space."""
+
     ACTION = "action"
     ANGLE = "angle"
     THROTTLE = "throttle"
     CATEGORY = "category"
 
 
-class ActionValues():
+class ActionValues:
     """Class with the PWM values with respect to
-       the possible actions that can be sent to servo, pertaining to
-       the angle and throttle.
+    the possible actions that can be sent to servo, pertaining to
+    the angle and throttle.
     """
+
     FORWARD = 0.3
     REVERSE = -0.3
     FAST_LEFT = 0.9
@@ -87,55 +90,55 @@ ACTION_SPACE = {
         ActionSpaceKeys.ACTION: "No Action",
         ActionSpaceKeys.ANGLE: ActionValues.DEFAULT,
         ActionSpaceKeys.THROTTLE: ActionValues.DEFAULT,
-        ActionSpaceKeys.CATEGORY: 1
+        ActionSpaceKeys.CATEGORY: 1,
     },
     2: {
         ActionSpaceKeys.ACTION: "Forward",
         ActionSpaceKeys.ANGLE: ActionValues.DEFAULT,
         ActionSpaceKeys.THROTTLE: ActionValues.FORWARD,
-        ActionSpaceKeys.CATEGORY: 2
+        ActionSpaceKeys.CATEGORY: 2,
     },
     3: {
         ActionSpaceKeys.ACTION: "Slow Left, Forward",
         ActionSpaceKeys.ANGLE: ActionValues.SLOW_LEFT,
         ActionSpaceKeys.THROTTLE: ActionValues.FORWARD,
-        ActionSpaceKeys.CATEGORY: 3
+        ActionSpaceKeys.CATEGORY: 3,
     },
     4: {
         ActionSpaceKeys.ACTION: "Fast Left, Forward",
         ActionSpaceKeys.ANGLE: ActionValues.FAST_LEFT,
         ActionSpaceKeys.THROTTLE: ActionValues.FORWARD,
-        ActionSpaceKeys.CATEGORY: 4
+        ActionSpaceKeys.CATEGORY: 4,
     },
     5: {
         ActionSpaceKeys.ACTION: "Slow Right, Forward",
         ActionSpaceKeys.ANGLE: ActionValues.SLOW_RIGHT,
         ActionSpaceKeys.THROTTLE: ActionValues.FORWARD,
-        ActionSpaceKeys.CATEGORY: 5
+        ActionSpaceKeys.CATEGORY: 5,
     },
     6: {
         ActionSpaceKeys.ACTION: "Fast Right, Forward",
         ActionSpaceKeys.ANGLE: ActionValues.FAST_RIGHT,
         ActionSpaceKeys.THROTTLE: ActionValues.FORWARD,
-        ActionSpaceKeys.CATEGORY: 6
+        ActionSpaceKeys.CATEGORY: 6,
     },
     7: {
         ActionSpaceKeys.ACTION: "Reverse",
         ActionSpaceKeys.ANGLE: ActionValues.DEFAULT,
         ActionSpaceKeys.THROTTLE: ActionValues.REVERSE,
-        ActionSpaceKeys.CATEGORY: 7
+        ActionSpaceKeys.CATEGORY: 7,
     },
     8: {
         ActionSpaceKeys.ACTION: "Fast Left, Reverse",
         ActionSpaceKeys.ANGLE: ActionValues.FAST_LEFT,
         ActionSpaceKeys.THROTTLE: ActionValues.REVERSE,
-        ActionSpaceKeys.CATEGORY: 8
+        ActionSpaceKeys.CATEGORY: 8,
     },
     9: {
         ActionSpaceKeys.ACTION: "Fast Right, Reverse",
         ActionSpaceKeys.ANGLE: ActionValues.FAST_RIGHT,
         ActionSpaceKeys.THROTTLE: ActionValues.REVERSE,
-        ActionSpaceKeys.CATEGORY: 9
+        ActionSpaceKeys.CATEGORY: 9,
     },
 }
 
