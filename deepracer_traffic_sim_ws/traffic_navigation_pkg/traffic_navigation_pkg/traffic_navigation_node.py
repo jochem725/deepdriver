@@ -33,45 +33,42 @@ The node defines:
 import time
 import signal
 import threading
-import math
 import rclpy
 from rclpy.node import Node
 from rclpy.executors import MultiThreadedExecutor
-from rclpy.qos import (QoSProfile,
-                       QoSHistoryPolicy,
-                       QoSReliabilityPolicy)
+from rclpy.qos import QoSProfile, QoSHistoryPolicy, QoSReliabilityPolicy
 
-from deepracer_interfaces_pkg.msg import (DetectionDeltaMsg,
-                                          ServoCtrlMsg)
+from deepracer_interfaces_pkg.msg import ServoCtrlMsg
 from deepracer_interfaces_pkg.srv import SetMaxSpeedSrv
-from traffic_navigation_pkg import (constants,
-                                utils)
+from traffic_navigation_pkg import constants, utils
 
 
 class TrafficNavigationNode(Node):
     """Node responsible for deciding the action messages (servo control messages specifically angle
-       and throttle) to be sent out using the detection deltas from object_detection_node.
+    and throttle) to be sent out using the detection deltas from object_detection_node.
     """
 
     def __init__(self, qos_profile):
-        """Create a TrafficNavigationNode.
-        """
-        super().__init__('traffic_navigation_node')
+        """Create a TrafficNavigationNode."""
+        super().__init__("traffic_navigation_node")
         self.get_logger().info("traffic_navigation_node started.")
 
         # Creating publisher to publish action (angle and throttle).
-        self.action_publisher = self.create_publisher(ServoCtrlMsg,
-                                                      constants.ACTION_PUBLISH_TOPIC,
-                                                      qos_profile)
+        self.action_publisher = self.create_publisher(
+            ServoCtrlMsg, constants.ACTION_PUBLISH_TOPIC, qos_profile
+        )
 
         # Service to dynamically set MAX_SPEED_PCT.
-        self.set_max_speed_service = self.create_service(SetMaxSpeedSrv,
-                                                         constants.SET_MAX_SPEED_SERVICE_NAME,
-                                                         self.set_max_speed_cb)
+        self.set_max_speed_service = self.create_service(
+            SetMaxSpeedSrv, constants.SET_MAX_SPEED_SERVICE_NAME, self.set_max_speed_cb
+        )
 
         # Initializing the msg to be published.
         msg = ServoCtrlMsg()
-        msg.angle, msg.throttle = constants.ActionValues.DEFAULT, constants.ActionValues.DEFAULT
+        msg.angle, msg.throttle = (
+            constants.ActionValues.DEFAULT,
+            constants.ActionValues.DEFAULT,
+        )
 
         self.lock = threading.Lock()
         # Default maximum speed percentage (updated as per request using service call).
@@ -83,18 +80,16 @@ class TrafficNavigationNode(Node):
         self.thread = threading.Thread(target=self.main_loop, args=(msg,))
         self.thread.start()
         self.thread_initialized = True
-        self.get_logger().info(f"Waiting for input")
+        self.get_logger().info("Waiting for input...")
 
     def wait_for_thread(self):
-        """Function which joins the created background thread.
-        """
+        """Function which joins the created background thread."""
         if self.thread_initialized:
             self.thread.join()
             self.get_logger().info("Thread joined")
 
     def thread_shutdown(self):
-        """Function which sets the flag to shutdown background thread.
-        """
+        """Function which sets the flag to shutdown background thread."""
         self.stop_thread = True
 
     def set_max_speed_cb(self, req, res):
@@ -115,7 +110,9 @@ class TrafficNavigationNode(Node):
         self.lock.acquire()
         try:
             self.max_speed_pct = req.max_speed_pct
-            self.get_logger().info(f"Incoming request: max_speed_pct: {req.max_speed_pct}")
+            self.get_logger().info(
+                f"Incoming request: max_speed_pct: {req.max_speed_pct}"
+            )
             res.error = 0
         except Exception as ex:
             self.get_logger().error(f"Failed set max speed pct: {ex}")
@@ -123,76 +120,6 @@ class TrafficNavigationNode(Node):
         finally:
             self.lock.release()
         return res
-
-    def get_mapped_action(self, action_category, max_speed_pct):
-        """Return the angle and throttle values to be published for servo.
-
-        Args:
-            action_category (int): Integer value corresponding to the action space category.
-            max_speed_pct (float): Float value ranging from 0.0 to 1.0 taken as input
-                                   from maximum speed input.
-        Returns:
-            angle (float): Angle value to be published to servo.
-            throttle (float): Throttle value to be published to servo.
-        """
-        action = constants.ACTION_SPACE[action_category][constants.ActionSpaceKeys.ACTION]
-        self.get_logger().info(action)
-        angle = constants.ACTION_SPACE[action_category][constants.ActionSpaceKeys.ANGLE]
-        categorized_throttle = \
-            constants.ACTION_SPACE[action_category][constants.ActionSpaceKeys.THROTTLE]
-        throttle = self.get_rescaled_manual_speed(categorized_throttle, max_speed_pct)
-        return angle, throttle
-
-    def get_rescaled_manual_speed(self, categorized_throttle, max_speed_pct):
-        """Return the non linearly rescaled speed value based on the max_speed_pct.
-
-        Args:
-            categorized_throttle (float): Float value ranging from -1.0 to 1.0.
-            max_speed_pct (float): Float value ranging from 0.0 to 1.0 taken as input
-                                   from maximum speed input.
-        Returns:
-            float: Categorized value of the input speed.
-        """
-        # return 0.0 if categorized_throttle or maximum speed pct is 0.0.
-        if categorized_throttle == 0.0 or max_speed_pct == 0.0:
-            return 0.0
-
-        # get the parameter value to calculate the coefficients a, b in the equation y=ax^2+bx
-        # The lower the update_speed_scale_value parameter, higher the impact on the
-        # final mapped_speed.
-        # Hence the update_speed_scale_value parameter is inversely associated with max_speed_pct
-        # and bounded by MANUAL_SPEED_SCALE_BOUNDS.
-        # Ex: max_speed_pct = 0.5; update_speed_scale_value = 3
-        #     max_speed_pct = 1.0; update_speed_scale_value = 1
-        # Lower the update_speed_scale_value: categorized_throttle value gets mapped to
-        # higher possible values.
-        #   Example: update_speed_scale_value = 1.0;
-        #            categorized_throttle = 0.8 ==> mapped_speed = 0.992
-        # Higher the update_speed_scale_value: categorized_throttle value gets mapped to
-        # lower possible values.
-        #   Example: update_speed_scale_value = 3.0;
-        #            categorized_throttle = 0.8 ==> mapped_speed = 0.501
-
-        inverse_max_speed_pct = (1 - max_speed_pct)
-        update_speed_scale_value = \
-            constants.MANUAL_SPEED_SCALE_BOUNDS[0] + \
-            inverse_max_speed_pct * \
-            (constants.MANUAL_SPEED_SCALE_BOUNDS[1] - constants.MANUAL_SPEED_SCALE_BOUNDS[0])
-        speed_mapping_coefficients = dict()
-
-        # recreate the mapping coefficients for the non-linear equation ax^2 + bx based on
-        # the update_speed_scale_value.
-        # These coefficents map the [update_speed_scale_value, update_speed_scale_value/2]
-        # values to DEFAULT_SPEED_SCALE values [1.0, 0.8].
-        speed_mapping_coefficients["a"] = \
-            (1.0 / update_speed_scale_value**2) * \
-            (2.0 * constants.DEFAULT_SPEED_SCALES[0] - 4.0 * constants.DEFAULT_SPEED_SCALES[1])
-        speed_mapping_coefficients["b"] = \
-            (1.0 / update_speed_scale_value) * \
-            (4.0 * constants.DEFAULT_SPEED_SCALES[1] - constants.DEFAULT_SPEED_SCALES[0])
-        return math.copysign(1.0, categorized_throttle) * \
-            (speed_mapping_coefficients["a"] * abs(categorized_throttle)**2 +
-             speed_mapping_coefficients["b"] * abs(categorized_throttle))
 
     def main_loop(self, msg):
         """Function which runs in a separate thread and decides the actions the car should take.
@@ -204,12 +131,11 @@ class TrafficNavigationNode(Node):
             while not self.stop_thread:
                 # Get a new message to plan action.
                 # TODO: Currently do nothing, take no action.
-                msg.angle, msg.throttle = self.get_mapped_action(1, self.max_speed_pct)
+                msg.angle, msg.throttle = utils.get_mapped_action(1, self.max_speed_pct)
                 # Publish msg based on action planned and mapped from a new object detection.
                 self.action_publisher.publish(msg)
 
-    
-                self.get_logger().info(f"Main loop iteration...")
+                self.get_logger().info("Main loop iteration...")
 
                 # Sleep for a default amount of time before checking if new data is available.
                 time.sleep(constants.DEFAULT_SLEEP)
@@ -217,7 +143,10 @@ class TrafficNavigationNode(Node):
         except Exception as ex:
             self.get_logger().error(f"Failed to publish action to servo: {ex}")
             # Stop the car
-            msg.angle, msg.throttle = constants.ActionValues.DEFAULT, constants.ActionValues.DEFAULT
+            msg.angle, msg.throttle = (
+                constants.ActionValues.DEFAULT,
+                constants.ActionValues.DEFAULT,
+            )
             self.action_publisher.publish(msg)
             # Destroy the ROS Node running in another thread as well.
             self.destroy_node()
@@ -226,9 +155,11 @@ class TrafficNavigationNode(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    qos = QoSProfile(reliability=QoSReliabilityPolicy.RMW_QOS_POLICY_RELIABILITY_BEST_EFFORT,
-                     depth=1,
-                     history=QoSHistoryPolicy.RMW_QOS_POLICY_HISTORY_KEEP_LAST)
+    qos = QoSProfile(
+        reliability=QoSReliabilityPolicy.RMW_QOS_POLICY_RELIABILITY_BEST_EFFORT,
+        depth=1,
+        history=QoSHistoryPolicy.RMW_QOS_POLICY_HISTORY_KEEP_LAST,
+    )
 
     try:
         traffic_navigation_node = TrafficNavigationNode(qos)
@@ -249,7 +180,9 @@ def main(args=None):
         signal.signal(signal.SIGINT, signal_handler)
         rclpy.spin(traffic_navigation_node, executor)
     except Exception as ex:
-        traffic_navigation_node.get_logger().error(f"Exception in TrafficNavigationNode: {ex}")
+        traffic_navigation_node.get_logger().error(
+            f"Exception in TrafficNavigationNode: {ex}"
+        )
         traffic_navigation_node.destroy_node()
         rclpy.shutdown()
 
@@ -260,5 +193,5 @@ def main(args=None):
     rclpy.shutdown()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
