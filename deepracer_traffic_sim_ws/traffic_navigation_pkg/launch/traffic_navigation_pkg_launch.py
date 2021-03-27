@@ -13,7 +13,6 @@
 #   See the License for the specific language governing permissions and         #
 #   limitations under the License.                                              #
 #################################################################################
-
 from launch import LaunchDescription
 from launch_ros.actions import Node
 
@@ -21,9 +20,9 @@ from launch_ros.actions import Node
 def generate_launch_description():
     return LaunchDescription([
         Node(
-            package='deepracer_navigation_pkg',
-            namespace='deepracer_navigation_pkg',
-            executable='deepracer_navigation_node',
-            name='deepracer_navigation_node'
+            package='traffic_navigation_pkg',
+            namespace='traffic_navigation_pkg',
+            executable='traffic_navigation_node',
+            name='traffic_navigation_node'
         )
     ])

@@ -1,11 +1,10 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>deepracer_navigation_pkg</name>
-  <version>0.0.1</version>
-  <description>This package contains logic for transforming inference results 
-               to action values for autnomous driving.
-  </description>
+  <name>traffic_navigation_pkg</name>
+<version>0.0.1</version>
+  <description>This package contains logic for traffic_navigation which decides \
+                 the action / controller message to send to servo</description>
   <maintainer email="aws-deepracer@amazon.com">AWS DeepRacer</maintainer>
   <license>Apache 2.0</license>
 

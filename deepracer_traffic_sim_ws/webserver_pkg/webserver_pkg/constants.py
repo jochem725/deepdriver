@@ -56,7 +56,7 @@ DEEPRACER_NAVIGATION_PKG_NS = "/deepracer_navigation_pkg"
 LOAD_ACTION_SPACE_SERVICE = f"{DEEPRACER_NAVIGATION_PKG_NS}/load_action_space"
 NAVIGATION_THROTTLE_SERVICE = f"{DEEPRACER_NAVIGATION_PKG_NS}/navigation_throttle"
 
-# ftl_navigation_pkg
+# traffic_navigation_pkg
 TRAFFIC_NAVIGATION_PKG_NS = "/traffic_navigation_pkg"
 TRAFFIC_SET_MAX_SPEED_SERVICE = f"{TRAFFIC_NAVIGATION_PKG_NS}/set_max_speed"
 
