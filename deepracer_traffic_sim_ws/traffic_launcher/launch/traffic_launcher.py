@@ -20,6 +20,12 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
     ld = LaunchDescription()
+    traffic_navigation_node = Node(
+        package='traffic_navigation_pkg',
+        namespace='traffic_navigation_pkg',
+        executable='traffic_navigation_node',
+        name='traffic_navigation_node'
+    )
     camera_node = Node(
         package='camera_pkg',
         namespace='camera_pkg',
@@ -135,6 +141,7 @@ def generate_launch_description():
         executable='web_video_server',
         name='web_video_server'
     )
+    ld.add_action(traffic_navigation_node)
     ld.add_action(camera_node)
     ld.add_action(ctrl_node)
     ld.add_action(deepracer_navigation_node)
