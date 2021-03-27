@@ -166,6 +166,7 @@ class ObjectDetectionNode(Node):
         Returns:
             image: Preprosessed image expected by the network.
         """
+
         image = self.bridge.imgmsg_to_cv2(sensor_data.images[0])
         ih, iw = image.shape[:-1]
 
@@ -188,7 +189,10 @@ class ObjectDetectionNode(Node):
 
                 # Pre-process input.
                 input_data = {}
-                input_data[self.input_name] = self.preprocess(sensor_data)
+                input_image = self.preprocess(sensor_data)
+                input_data[self.input_name] = input_image
+
+                self.get_logger().info("STARTING INFERENCE")
 
                 # Perform Inference.
                 res = self.exec_net.infer(inputs=input_data)
@@ -202,62 +206,76 @@ class ObjectDetectionNode(Node):
                 infer_results_array.results = []  # List of InferResults objects.
 
                 # Image for which inferences were done.
+                infer_results_array.images = []
                 infer_results_array.images = [
                     self.bridge.cv2_to_imgmsg(
-                        np.array(input_data[self.input_name]), "bgr8"
+                        np.array(input_image.transpose((1, 2, 0))), "bgr8"
                     )
                 ]
 
                 # For each detected model in the inference data:
                 # - Check if confident enough (> CONFIDENCE_TRESHOLD)
                 # - Check if belongs to one of the classes we're interested in.
+
+                outputs = []
+
                 for _, proposal in enumerate(output_data):
                     confidence = np.float(proposal[2])
-                    label_id = np.int(proposal[1])
-
-                    # Human readable.
-                    label = constants.COCO_LABELS[label_id]
 
                     if confidence <= constants.CONFIDENCE_THRESHOLD:
                         continue
 
-                    if label not in constants.DETECT_CLASSES:
-                        continue
+                    # Human readable.
+                    label_id = np.int(proposal[1])
+                    label = constants.COCO_LABELS[label_id]
+
+                    # if label not in constants.DETECT_CLASSES:
+                    #     continue
 
                     self.get_logger().info(
                         f"Detected {label} - confidence {confidence}"
                     )
 
+                    xmin = np.int(self.w * proposal[3])
+                    ymin = np.int(self.h * proposal[4])
+                    xmax = np.int(self.w * proposal[5])
+                    ymax = np.int(self.h * proposal[6])
+
                     # Compute bounding box, coordinates are in normalized format ([0, 1])
                     infer_result = InferResults()
                     infer_result.class_label = label_id
                     infer_result.class_prob = confidence
-                    infer_result.x_min = np.int(self.w * proposal[3])  # Top left
-                    infer_result.y_min = np.int(self.h * proposal[4])  # Top left
-                    infer_result.x_max = np.int(self.w * proposal[5])  # Bottom right
-                    infer_result.y_max = np.int(self.h * proposal[6])  # Bottom right
+                    infer_result.x_min = np.float(xmin)  # Top left
+                    infer_result.y_min = np.float(ymin)  # Top left
+                    infer_result.x_max = np.float(xmax)  # Bottom right
+                    infer_result.y_max = np.float(ymax)  # Bottom right
 
                     infer_results_array.results.append(infer_result)
 
+                    outputs.append((label_id, confidence, xmin, ymin, xmax, ymax))
                 if self.publish_display_output:
+                    self.get_logger().info("Publishing display output")
+
                     # Change data layout from CHW to HWC.
                     display_image = input_data[self.input_name].transpose((1, 2, 0))
 
-                    for res in infer_results_array.results:
+                    for (label_id, confidence, xmin, ymin, xmax, ymax) in outputs:
                         # Drawing bounding boxes on the image.
                         cv2.rectangle(
                             display_image,
-                            (res.x_min, res.y_min),
-                            (res.x_max, res.y_max),
+                            (xmin, ymin),
+                            (xmax, ymax),
                             (232, 35, 244),
                             2,
                         )
                         cv2.putText(
                             display_image,
-                            constants.COCO_LABELS[res.class_label],
-                            (res.x_min, res.y_min - 10),
+                            "{} ({:.2f})".format(
+                                constants.COCO_LABELS[label_id], confidence
+                            ),
+                            (xmin, ymin - 10),
                             cv2.FONT_HERSHEY_SIMPLEX,
-                            0.9,
+                            0.4,
                             (232, 35, 244),
                             2,
                         )
