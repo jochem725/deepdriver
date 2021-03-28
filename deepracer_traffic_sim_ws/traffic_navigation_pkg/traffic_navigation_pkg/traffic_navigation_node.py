@@ -37,10 +37,10 @@ import rclpy
 from rclpy.node import Node
 from rclpy.executors import MultiThreadedExecutor
 from rclpy.qos import QoSProfile, QoSHistoryPolicy, QoSReliabilityPolicy
-
-from deepracer_interfaces_pkg.msg import ServoCtrlMsg, InferResultsArray
-from deepracer_interfaces_pkg.srv import SetMaxSpeedSrv
-from traffic_navigation_pkg import constants, control_utils, utils
+from rclpy.callback_groups import MutuallyExclusiveCallbackGroup
+from deepracer_interfaces_pkg.msg import ServoCtrlMsg, InferResultsArray, TrafficSign
+from deepracer_interfaces_pkg.srv import SetMaxSpeedSrv, SetLedCtrlSrv
+from traffic_navigation_pkg import constants, utils
 
 
 class TrafficNavigationNode(Node):
@@ -54,7 +54,7 @@ class TrafficNavigationNode(Node):
         self.get_logger().info("traffic_navigation_node started.")
 
         # Double buffer to hold the input inferences from object detection.
-        self.inference_buffer = utils.DoubleBuffer(clear_data_on_get=True)
+        self.sign_buffer = utils.DoubleBuffer(clear_data_on_get=True)
 
         # Creating publisher to publish action (angle and throttle).
         self.action_publisher = self.create_publisher(
@@ -66,11 +66,24 @@ class TrafficNavigationNode(Node):
             SetMaxSpeedSrv, constants.SET_MAX_SPEED_SERVICE_NAME, self.set_max_speed_cb
         )
 
+        # Service to dynamically set LED COLOR.
+        set_led_color_cb_group = MutuallyExclusiveCallbackGroup()
+        self.set_led_ctrl_client = self.create_client(
+            SetLedCtrlSrv,
+            constants.SET_LED_CTRL_SERVICE,
+            callback_group=set_led_color_cb_group,
+        )
+
+        while not self.set_led_ctrl_client.wait_for_service(timeout_sec=1.0):
+            self.get_logger().info(
+                f"{self.set_led_ctrl_client.srv_name} service not available, waiting again..."
+            )
+
         # Create subscription to object detections from the object detection node.
-        self.detection_delta_subscriber = self.create_subscription(
-            InferResultsArray,
-            constants.OBJECT_DETECTION_INFERENCE_TOPIC,
-            self.object_detection_cb,
+        self.traffic_sign_results_subscriber = self.create_subscription(
+            TrafficSign,
+            constants.TRAFFIC_SIGN_RESULTS_TOPIC,
+            self.traffic_sign_cb,
             qos_profile,
         )
 
@@ -103,17 +116,15 @@ class TrafficNavigationNode(Node):
         """Function which sets the flag to shutdown background thread."""
         self.stop_thread = True
 
-    def object_detection_cb(self, inference):
-        """Call back for whenever detection delta for a perception
-           is received from object_detection_node.
+    def traffic_sign_cb(self, directive):
 
-        Args:
-            inference (InferResultsArray): Message containing the inference results from the object detection node.
-        """
+        print(f"Received traffic sign: {len(directive.detected_sign)}")
 
-        print(f"Received inferences: {len(inference.results)} objects")
+        self.sign_buffer.put(directive)
 
-        self.inference_buffer.put(inference)
+    def set_led_ctrl_cb(self, req, res):
+        # TODO
+        pass
 
     def set_max_speed_cb(self, req, res):
         """Callback which dynamically sets the max_speed_pct.
@@ -144,6 +155,29 @@ class TrafficNavigationNode(Node):
             self.lock.release()
         return res
 
+    def set_led_color(self, color=None):
+        LED_SCALING_FACTOR = 39215
+        set_led_color_req = SetLedCtrlSrv.Request()
+
+        if color == "red":
+            set_led_color_req.red = 255 * LED_SCALING_FACTOR
+            set_led_color_req.green = 0
+            set_led_color_req.blue = 0
+        elif color == "yellow":
+            set_led_color_req.red = 255 * LED_SCALING_FACTOR
+            set_led_color_req.green = 255 * LED_SCALING_FACTOR
+            set_led_color_req.blue = 0
+        elif color == "green":
+            set_led_color_req.red = 0
+            set_led_color_req.green = 255 * LED_SCALING_FACTOR
+            set_led_color_req.blue = 0
+        else:
+            set_led_color_req.red = 0
+            set_led_color_req.green = 0
+            set_led_color_req.blue = 0
+
+        self.set_led_ctrl_client.call_async(set_led_color_req)
+
     def main_loop(self, msg):
         """Function which runs in a separate thread and decides the actions the car should take.
 
@@ -153,17 +187,30 @@ class TrafficNavigationNode(Node):
         try:
             while not self.stop_thread:
                 # Get a new message to plan action.
-                # TODO: Currently do nothing, take no action.
-                msg.angle, msg.throttle = control_utils.get_mapped_action(
-                    1, self.max_speed_pct
-                )
-                # Publish msg based on action planned and mapped from a new object detection.
-                self.action_publisher.publish(msg)
+                # # TODO: Currently do nothing, take no action.
 
-                self.get_logger().info("Main loop iteration...")
+                traffic_sign = self.sign_buffer.get()
+                sign = traffic_sign.detected_sign
+
+                self.get_logger().info(f"Got traffic sign directive {sign}")
+
+                if "traffic_light" in sign:
+                    color = sign.split("_")[-1]
+                    self.set_led_color(color)
+                else:
+                    self.set_led_color()
+
+                # msg.angle, msg.throttle = control_utils.get_mapped_action(
+                #     1, self.max_speed_pct
+                # )
+                # # Publish msg based on action planned and mapped from a new object detection.
+                # self.action_publisher.publish(msg)
 
                 # Sleep for a default amount of time before checking if new data is available.
                 time.sleep(constants.DEFAULT_SLEEP)
+
+                while self.sign_buffer.is_empty() and not self.stop_thread:
+                    time.sleep(0.1)
 
         except Exception as ex:
             self.get_logger().error(f"Failed to publish action to servo: {ex}")

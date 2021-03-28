@@ -42,6 +42,7 @@ set(msg_files
   "msg/NetworkConnectionStatus.msg"
   "msg/SoftwareUpdatePctMsg.msg"
   "msg/USBFileSystemNotificationMsg.msg"
+  "msg/TrafficSign.msg"
 )
 set(srv_files
   "srv/ActiveStateSrv.srv"

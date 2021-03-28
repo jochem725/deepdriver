@@ -20,6 +20,13 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
     ld = LaunchDescription()
+    traffic_sign_node = Node(
+        package="traffic_sign_pkg",
+        namespace="traffic_sign_pkg",
+        executable="traffic_sign_node",
+        name="traffic_sign_node",
+        parameters=[{"PUBLISH_DISPLAY_OUTPUT": True}],
+    )
     object_detection_node = Node(
         package="object_detection_pkg",
         namespace="object_detection_pkg",
@@ -150,6 +157,7 @@ def generate_launch_description():
         executable="web_video_server",
         name="web_video_server",
     )
+    ld.add_action(traffic_sign_node)
     ld.add_action(object_detection_node)
     ld.add_action(traffic_navigation_node)
     ld.add_action(camera_node)

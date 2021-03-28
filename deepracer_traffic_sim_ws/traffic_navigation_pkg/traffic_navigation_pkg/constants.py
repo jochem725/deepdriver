@@ -17,8 +17,14 @@
 ACTION_PUBLISH_TOPIC = "traffic_drive"
 SET_MAX_SPEED_SERVICE_NAME = "set_max_speed"
 
+TRAFFIC_SIGN_PKG_NS = "/traffic_sign_pkg"
+TRAFFIC_SIGN_RESULTS_TOPIC = f"{TRAFFIC_SIGN_PKG_NS}/traffic_sign_results"
+
 OBJECT_DETECTION_PKG_NS = "/object_detection_pkg"
 OBJECT_DETECTION_INFERENCE_TOPIC = f"{OBJECT_DETECTION_PKG_NS}/inference_results"
+
+SERVO_PKG_NS = "/servo_pkg"
+SET_LED_CTRL_SERVICE = f"{SERVO_PKG_NS}/set_led_state"
 
 
 class DeltaValueMap:

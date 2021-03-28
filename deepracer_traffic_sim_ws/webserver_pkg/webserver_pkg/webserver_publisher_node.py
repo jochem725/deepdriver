@@ -190,7 +190,7 @@ class WebServerNode(Node):
         model_load_cb_group = ReentrantCallbackGroup()
 
         self.get_logger().info(f"Create verify model ready service client: {VERIFY_MODEL_READY_SERVICE}")
-        self.verify_model_ready_cli = self.create_client(VerifyModelReadySrv,
+        self.verify_model_ready_cli = self.VerifyModelReadySrv,
                                                          VERIFY_MODEL_READY_SERVICE,
                                                          callback_group=model_load_cb_group)
         self.wait_for_service_availability(self.verify_model_ready_cli)
