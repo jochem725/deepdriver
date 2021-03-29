@@ -50,7 +50,7 @@ Open up a terminal on the DeepRacer device and run the following commands as roo
 
 1. Clone the entire Follow the Leader(FTL) sample project on the DeepRacer device.
 
-        git clone https://github.com/jochem725/aws-deepracer-traffic-sim
+        git clone https://github.com/jochem725/aws-deepracer-traffic-sim.git
         cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/
 
 1. Fetch unreleased dependencies:
