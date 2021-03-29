@@ -44,11 +44,6 @@ from traffic_sign_pkg import constants, utils, cv_utils
 
 
 class TrafficSignNode(Node):
-    """Node responsible for collecting sensor data (camera images) from sensor_fusion_pkg
-    and running object detection on specified object, providing normalized delta from target for
-    ftl_navigation_pkg.
-    """
-
     def __init__(self, qos_profile):
         """Create a ObjectDetectionNode."""
         super().__init__("traffic_sign_node")

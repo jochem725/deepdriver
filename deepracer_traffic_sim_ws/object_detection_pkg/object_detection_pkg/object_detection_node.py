@@ -14,21 +14,7 @@
 #   limitations under the License.                                              #
 #################################################################################
 
-"""
-object_detection_node.py
 
-This module creates the object_detection_node which is responsible for collecting
-sensor data (camera images) from sensor_fusion_pkg and running object detection,
-on specified object, providing normalized delta from target for
-ftl_navigation_pkg.
-
-The node defines:
-    image_subscriber: A subscriber to the /sensor_fusion_pkg/sensor_msg published
-                      by the sensor_fusion_pkg with sensor data.
-    display_image_publisher: A publisher to publish the Image message using
-                             web_video_server.
-    inference_result_publisher: A publisher that publishes inference results and the image on which inference was run.
-"""
 import time
 import signal
 import threading
@@ -48,11 +34,6 @@ from object_detection_pkg import constants, utils
 
 
 class ObjectDetectionNode(Node):
-    """Node responsible for collecting sensor data (camera images) from sensor_fusion_pkg
-    and running object detection on specified object, providing normalized delta from target for
-    ftl_navigation_pkg.
-    """
-
     def __init__(self, qos_profile):
         """Create a ObjectDetectionNode."""
         super().__init__("object_detection_node")

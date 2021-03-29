@@ -63,21 +63,21 @@ Open up a terminal on the DeepRacer device and run the following commands as roo
 1. Clone the entire Traffic Simulation project on the DeepRacer device.
 
         git clone https://github.com/awsdeepracer/aws-deepracer-follow-the-leader-sample-project.git
-        cd ~/deepracer_ws/aws-deepracer-follow-the-leader-sample-project/deepracer_follow_the_leader_ws/
+        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/
 
 1. Fetch unreleased dependencies:
 
-        cd ~/deepracer_ws/aws-deepracer-follow-the-leader-sample-project/deepracer_follow_the_leader_ws/
+        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/
         rosws update
 
 1. Resolve the dependencies:
 
-        cd ~/deepracer_ws/aws-deepracer-follow-the-leader-sample-project/deepracer_follow_the_leader_ws/ && apt-get update
+        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/ && apt-get update
         rosdep install -i --from-path . --rosdistro foxy -y
 
 1. Build the object_detection_pkg and deepracer_interfaces_pkg:
 
-        cd ~/deepracer_ws/aws-deepracer-follow-the-leader-sample-project/deepracer_follow_the_leader_ws/ && colcon build --packages-select object_detection_pkg deepracer_interfaces_pkg
+        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/ && colcon build --packages-select object_detection_pkg deepracer_interfaces_pkg
 
 
 ## Usage
@@ -94,7 +94,7 @@ Configure the launch file to specify which device to use for inference (for more
 
 1. Navigate to the Follow the Leader(FTL) workspace:
 
-        cd ~/deepracer_ws/aws-deepracer-follow-the-leader-sample-project/deepracer_follow_the_leader_ws/
+        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/
 
 1. Source the ROS2 Foxy setup bash and OpenVINO bash script:
 
@@ -103,7 +103,7 @@ Configure the launch file to specify which device to use for inference (for more
 
 1. Source the setup script for the installed packages:
 
-        source ~/deepracer_ws/aws-deepracer-follow-the-leader-sample-project/deepracer_follow_the_leader_ws/install/setup.bash 
+        source ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/install/setup.bash 
 
 1. Launch the object_detection_node using the launch script:
 
@@ -155,7 +155,7 @@ A launch file called object_detection_pkg_launch.py is included in this package 
 
 | Topic Name | Message Type | Description |
 |----------- | ------------ | ----------- |
-| object_detection_delta | DetectionDeltaMsg | Message with Object Detection normalized error (delta) of the detected object from the target (reference) position with respect to x and y axes. |
+| inference_results | InferResultsArray | Message with detected objects as InferResults and the image for which they were detected |
 | detection_display | Image | Message to display the input stream of images after inference, published to the local web_video_server. |
 
 ## Resources
