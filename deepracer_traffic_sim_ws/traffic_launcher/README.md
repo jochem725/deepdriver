@@ -107,7 +107,7 @@ To launch the Traffic Simulation sample application as root user on the AWS Deep
 
         source cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/install/setup.bash
 
-1. Launch the nodes required for follow the leader sample project:
+1. Launch the nodes required for traffic project:
 
         ros2 launch traffic_launcher traffic_launcher.py
 
@@ -140,7 +140,7 @@ Once the traffic_launcher has been kicked-off, open up a adjacent new terminal a
         ros2 service call /ctrl_pkg/enable_state deepracer_interfaces_pkg/srv/EnableStateSrv "{is_active: True}"
 ## Launch Files
 
-The ftl_launcher.py included in this package is the main launcher file that launches all the required nodes for the Traffic Simulation project. This launcher file also includes the nodes from the AWS DeepRacer core application.
+The traffic_launcher.py included in this package is the main launcher file that launches all the required nodes for the Traffic Simulation project. This launcher file also includes the nodes from the AWS DeepRacer core application.
 
         from launch import LaunchDescription
         from launch_ros.actions import Node
