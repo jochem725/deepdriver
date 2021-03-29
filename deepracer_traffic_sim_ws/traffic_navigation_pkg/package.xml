@@ -10,7 +10,6 @@
 
   <depend>rclpy</depend>
   <depend>deepracer_interfaces_pkg</depend>
-  <depend>ctrl_pkg</depend>
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
