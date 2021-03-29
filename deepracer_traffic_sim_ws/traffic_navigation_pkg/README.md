@@ -16,7 +16,7 @@ The Traffic Simulation project is a sample application built on top of the exist
 
 The traffic_navigation_pkg specifically depends on the following ROS2 packages as build and execute dependencies:
 
-1. *deepracer_interfaces_pkg* - This packages contains the custom message and service type definitions used across the AWS DeepRacer core application, modified to support Traffic Simulation sample project.
+1. *deepracer_interfaces_pkg* - This packages contains the custom message and service type definitions used across the AWS DeepRacer core application, modified to support Traffic Simulation project.
 
 ### Downloading and Building
 
@@ -39,29 +39,29 @@ Open up a terminal on the DeepRacer device and run the following commands as roo
         mkdir -p ~/deepracer_ws
         cd ~/deepracer_ws
 
-1. Clone the entire Traffic Simulation sample project on the DeepRacer device.
+2. Clone the entire Traffic Simulation project on the DeepRacer device.
 
         git clone https://github.com/jochem725/aws-deepracer-traffic-sim.git
         cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/
 
-2. Fetch unreleased dependencies:
+3. Fetch unreleased dependencies:
 
         cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/
         rosws update
 
-3. Resolve the dependencies:
+4. Resolve the dependencies:
 
         cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/ && apt-get update
         rosdep install -i --from-path . --rosdistro foxy -y
 
-4. Build the traffic_navigation_pkg and deepracer_interfaces_pkg:
+5. Build the traffic_navigation_pkg and deepracer_interfaces_pkg:
 
         cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/ && colcon build --packages-select traffic_navigation_pkg deepracer_interfaces_pkg
 
 
 ## Usage
 
-Although the **traffic_navigation_node** is built to work with the Traffic Simulation sample project, it can be run independently for development/testing/debugging purposes.
+Although the **traffic_navigation_node** is built to work with the Traffic Simulation project, it can be run independently for development/testing/debugging purposes.
 
 ### Run the node
 

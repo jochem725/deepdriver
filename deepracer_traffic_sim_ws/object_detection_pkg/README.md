@@ -60,7 +60,7 @@ Open up a terminal on the DeepRacer device and run the following commands as roo
         mkdir -p ~/deepracer_ws
         cd ~/deepracer_ws
 
-1. Clone the entire Follow the Leader(FTL) sample project on the DeepRacer device.
+1. Clone the entire Traffic Simulation project on the DeepRacer device.
 
         git clone https://github.com/awsdeepracer/aws-deepracer-follow-the-leader-sample-project.git
         cd ~/deepracer_ws/aws-deepracer-follow-the-leader-sample-project/deepracer_follow_the_leader_ws/
@@ -82,7 +82,7 @@ Open up a terminal on the DeepRacer device and run the following commands as roo
 
 ## Usage
 
-Although the **object_detection_node** is built to work with the Follow the Leader(FTL) sample project, it can be run independently for development/testing/debugging purposes.
+Although the **object_detection_node** is built to work with the Traffic Simulation project, it can be run independently for development/testing/debugging purposes.
 
 ### Run the node
 
@@ -161,5 +161,5 @@ A launch file called object_detection_pkg_launch.py is included in this package 
 ## Resources
 
 * AWS DeepRacer Opensource getting started: [https://github.com/awsdeepracer/aws-deepracer-launcher/blob/main/getting-started.md](https://github.com/awsdeepracer/aws-deepracer-launcher/blob/main/getting-started.md)
-* Follow the Leader(FTL) sample project getting started: [https://github.com/awsdeepracer/aws-deepracer-follow-the-leader-sample-project/blob/main/getting-started.md](https://github.com/awsdeepracer/aws-deepracer-follow-the-leader-sample-project/blob/main/getting-started.md)
+* Traffic Simulation project getting started: [https://github.com/jochem725/aws-deepracer-traffic-sim/blob/main/getting-started.md](https://github.com/jochem725/aws-deepracer-traffic-sim/blob/main/getting-started.md)
 * Instructions to download and optimize the object detection model: [https://github.com/awsdeepracer/aws-deepracer-follow-the-leader-sample-project/blob/main/download-and-convert-object-detection-model.md](https://github.com/awsdeepracer/aws-deepracer-follow-the-leader-sample-project/blob/main/download-and-convert-object-detection-model.md)

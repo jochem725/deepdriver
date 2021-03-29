@@ -1,4 +1,4 @@
-# AWS DeepRacer Interfaces Package for Follow the Leader(FTL) sample project
+# AWS DeepRacer Interfaces Package for Traffic Simulation project
 
 ## Overview
 
@@ -40,20 +40,20 @@ Open up a terminal on the DeepRacer device and run the following commands as roo
         mkdir -p ~/deepracer_ws
         cd ~/deepracer_ws
 
-1. Clone the entire Follow the Leader(FTL) sample project on the DeepRacer device.
+2. Clone the entire Traffic Simulation project on the DeepRacer device.
 
         git clone https://github.com/jochem725/aws-deepracer-traffic-sim.git
         cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/
 
-1. Resolve the dependencies:
+3. Resolve the dependencies:
 
         cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/ && rosdep install -i --from-path . --rosdistro foxy -y
 
-1. Build the deepracer_interfaces_pkg:
+4. Build the deepracer_interfaces_pkg:
 
         cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/ && colcon build --packages-select deepracer_interfaces_pkg
 
 ## Resources
 
 * AWS DeepRacer Opensource getting started: [https://github.com/awsdeepracer/aws-deepracer-launcher/blob/main/getting-started.md](https://github.com/awsdeepracer/aws-deepracer-launcher/blob/main/getting-started.md)
-* Follow the Leader(FTL) sample project getting started: [https://github.com/jochem725/aws-deepracer-traffic-sim/blob/main/getting-started.md](https://github.com/jochem725/aws-deepracer-traffic-sim/blob/main/getting-started.md)
+* Traffic Simulation project getting started: [https://github.com/jochem725/aws-deepracer-traffic-sim/blob/main/getting-started.md](https://github.com/jochem725/aws-deepracer-traffic-sim/blob/main/getting-started.md)

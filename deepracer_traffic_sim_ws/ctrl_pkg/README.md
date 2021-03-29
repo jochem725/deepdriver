@@ -1,4 +1,4 @@
-# AWS DeepRacer Control Package for Follow the Leader(FTL) sample project
+# AWS DeepRacer Control Package for Traffic Simulation project
 
 ## Overview
 
@@ -18,7 +18,7 @@ The AWS DeepRacer device comes with all the pre-requisite packages and libraries
 
 The ctrl_pkg specifically depends on the following ROS2 packages as build and execute dependencies:
 
-1. *deepracer_interfaces_pkg* - This packages contains the custom message and service type definitions used across the AWS DeepRacer core application, modified to support Traffic Simulation sample project.
+1. *deepracer_interfaces_pkg* - This packages contains the custom message and service type definitions used across the AWS DeepRacer core application, modified to support Traffic Simulation project.
 2. *camera_pkg* - The DeepRacer Camera ROS package creates the *camera_node* which is part of the core AWS DeepRacer application.
 3. *servo_pkg* - The DeepRacer Servo ROS package creates the *servo_node* which is part of the core AWS DeepRacer application.
 4. *inference_pkg* - The DeepRacer Inference ROS package creates the *inference_node* which is part of the core AWS DeepRacer application.
@@ -48,29 +48,29 @@ Open up a terminal on the DeepRacer device and run the following commands as roo
         mkdir -p ~/deepracer_ws
         cd ~/deepracer_ws
 
-1. Clone the entire Follow the Leader(FTL) sample project on the DeepRacer device.
+2. Clone the entire Traffic Simulation project on the DeepRacer device.
 
         git clone https://github.com/jochem725/aws-deepracer-traffic-sim.git
         cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/
 
-1. Fetch unreleased dependencies:
+3. Fetch unreleased dependencies:
 
         cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/
         rosws update
 
-1. Resolve the dependencies:
+4. Resolve the dependencies:
 
         cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/ && apt-get update
         rosdep install -i --from-path . --rosdistro foxy -y
 
-1. Build the ctrl_pkg, camera_pkg, servo_pkg, inference_pkg, model_optimizer_pkg, deepracer_navigation_pkg and deepracer_interfaces_pkg:
+5. Build the ctrl_pkg, camera_pkg, servo_pkg, inference_pkg, model_optimizer_pkg, deepracer_navigation_pkg and deepracer_interfaces_pkg:
 
         cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/ && colcon build --packages-select ctrl_pkg camera_pkg servo_pkg inference_pkg model_optimizer_pkg deepracer_navigation_pkg deepracer_interfaces_pkg
 
 
 ## Usage
 
-The ctrl_node provides basic system level functionality for the AWS DeepRacer application and Follow the Leader(FTL) sample project to work. Although the node is built to work with the AWS DeepRacer application and Follow the Leader(FTL) sample project, it can be run independently for development/testing/debugging purposes.
+The ctrl_node provides basic system level functionality for the AWS DeepRacer application and Traffic Simulation project to work. Although the node is built to work with the AWS DeepRacer application and the Traffic Simulation project, it can be run independently for development/testing/debugging purposes.
 
 ### Run the node
 
@@ -80,7 +80,7 @@ To launch the built ctrl_node as root user on the AWS DeepRacer device open up a
 
         sudo su
 
-1. Navigate to the Follow the Leader(FTL) workspace:
+1. Navigate to the Traffic Simulation workspace:
 
         cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/
 
@@ -168,4 +168,4 @@ The ctrl_node provides the core functionality to manage the different modes of o
 ## Resources
 
 * AWS DeepRacer Opensource getting started: [https://github.com/awsdeepracer/aws-deepracer-launcher/blob/main/getting-started.md](https://github.com/awsdeepracer/aws-deepracer-launcher/blob/main/getting-started.md)
-* Follow the Leader(FTL) sample project getting started: [https://github.com/jochem725/aws-deepracer-traffic-sim/blob/main/getting-started.md](https://github.com/jochem725/aws-deepracer-traffic-sim/blob/main/getting-started.md)
+* Traffic Simulation project getting started: [https://github.com/jochem725/aws-deepracer-traffic-sim/blob/main/getting-started.md](https://github.com/jochem725/aws-deepracer-traffic-sim/blob/main/getting-started.md)
