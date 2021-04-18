@@ -65,24 +65,24 @@ Open up a terminal on the DeepRacer device and run the following commands as roo
 1. Clone the entire DeepDriver project on the DeepRacer device.
 
         git clone https://github.com/jochem725/aws-deepracer-traffic-sim.git
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/
+        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/
 
 1. Clone the async_web_server_cpp, web_video_server and rplidar_ros dependency packages on the DeepRacer device:
 
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/ && ./install_dependencies.sh
+        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/ && ./install_dependencies.sh
 
 1. Fetch unreleased dependencies:
 
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/
+        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/
         rosws update
 
 1. Resolve the dependencies:
 
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/ && rosdep install -i --from-path . --rosdistro foxy -y
+        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/ && rosdep install -i --from-path . --rosdistro foxy -y
 
 1. Build the packages in the workspace
 
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/ && colcon build
+        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/ && colcon build
 
 
 ## Usage
@@ -105,7 +105,7 @@ To launch the DeepDriver sample application as root user on the AWS DeepRacer de
 
 1. Source the setup script for the installed packages:
 
-        source cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/install/setup.bash
+        source cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/install/setup.bash
 
 1. Launch the nodes required for traffic project:
 
@@ -121,7 +121,7 @@ Once the traffic_launcher has been kicked-off, open up a adjacent new terminal a
 
 1. Navigate to the DeepDriver workspace:
 
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/
+        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/
 
 1. Source the ROS2 Foxy setup bash script:
 
@@ -129,7 +129,7 @@ Once the traffic_launcher has been kicked-off, open up a adjacent new terminal a
 
 1. Source the setup script for the installed packages:
 
-        source ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/install/setup.bash
+        source ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/install/setup.bash
 
 2. Set the mode of the DeepRacer via ctrl_pkg to "traffic" using the below ros2 service call:
 

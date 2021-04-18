@@ -51,21 +51,21 @@ Open up a terminal on the DeepRacer device and run the following commands as roo
 2. Clone the entire DeepDriver project on the DeepRacer device.
 
         git clone https://github.com/jochem725/aws-deepracer-traffic-sim.git
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/
+        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/
 
 3. Fetch unreleased dependencies:
 
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/
+        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/
         rosws update
 
 4. Resolve the dependencies:
 
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/ && apt-get update
+        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/ && apt-get update
         rosdep install -i --from-path . --rosdistro foxy -y
 
 5. Build the ctrl_pkg, camera_pkg, servo_pkg, inference_pkg, model_optimizer_pkg, deepracer_navigation_pkg and deepracer_interfaces_pkg:
 
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/ && colcon build --packages-select ctrl_pkg camera_pkg servo_pkg inference_pkg model_optimizer_pkg deepracer_navigation_pkg deepracer_interfaces_pkg
+        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/ && colcon build --packages-select ctrl_pkg camera_pkg servo_pkg inference_pkg model_optimizer_pkg deepracer_navigation_pkg deepracer_interfaces_pkg
 
 
 ## Usage
@@ -82,7 +82,7 @@ To launch the built ctrl_node as root user on the AWS DeepRacer device open up a
 
 1. Navigate to the DeepDriver workspace:
 
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/
+        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/
 
 1. Source the ROS2 Foxy setup bash script:
 
@@ -90,7 +90,7 @@ To launch the built ctrl_node as root user on the AWS DeepRacer device open up a
 
 1. Source the setup script for the installed packages:
 
-        source ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/install/setup.bash 
+        source ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/install/setup.bash 
 
 1. Launch the ctrl_node using the launch script:
 

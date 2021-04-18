@@ -43,15 +43,15 @@ Open up a terminal on the DeepRacer device and run the following commands as roo
 2. Clone the entire DeepDriver project on the DeepRacer device.
 
         git clone https://github.com/jochem725/aws-deepracer-traffic-sim.git
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/
+        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/
 
 3. Resolve the dependencies:
 
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/ && rosdep install -i --from-path . --rosdistro foxy -y
+        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/ && rosdep install -i --from-path . --rosdistro foxy -y
 
 4. Build the deepracer_interfaces_pkg:
 
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_traffic_sim_ws/ && colcon build --packages-select deepracer_interfaces_pkg
+        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/ && colcon build --packages-select deepracer_interfaces_pkg
 
 ## Resources
 
