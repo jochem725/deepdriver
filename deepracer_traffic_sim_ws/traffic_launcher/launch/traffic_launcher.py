@@ -20,7 +20,7 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
     # Set to false to save resources.
-    publish_display_output = False
+    publish_display_output = True
 
     ld = LaunchDescription()
     traffic_sign_node = Node(
