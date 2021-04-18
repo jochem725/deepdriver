@@ -1,4 +1,4 @@
-# AWS DeepRacer DeepDriver Project
+# AWS DeepRacer DeepDriver Launcher Package
 
 ## Overview
 
