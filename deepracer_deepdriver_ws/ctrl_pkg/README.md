@@ -2,7 +2,7 @@
 
 ## Overview
 
-The DeepRacer Control ROS package creates the *ctrl_node* which is part of the DeepDriver and will be launched from the traffic_launcher. This package was extended and modified from the DeepRacer Control ROS package developed for the core application. For more information about the DeepDriver project, see [DeepDriver](https://github.com/jochem725/deepdriver).
+The DeepRacer Control ROS package creates the *ctrl_node* which is part of the DeepDriver and will be launched from the deepdriver_launcher. This package was extended and modified from the DeepRacer Control ROS package developed for the core application. For more information about the DeepDriver project, see [DeepDriver](https://github.com/jochem725/deepdriver).
 
 This is the main node with services exposed to be used by webserver backend API calls. This node in the AWS DeepRacer application manages the different mode of the device [manual, autonomous, calibration]. It allows us to maintain the device in a single mode at any point of time so that the overlapping functionalities (like servo messages, etc) are not conflicting each other. In this package, an additional mode **traffic** has been added to support the DeepDriver project.
 

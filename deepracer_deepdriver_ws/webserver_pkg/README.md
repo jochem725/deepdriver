@@ -2,7 +2,7 @@
 
 ## Overview
 
-The DeepRacer Web Server ROS package creates the *web_publisher_node* which is part of the DeepDriver project and will be launched from the traffic_launcher. For more information about the DeepDriver project, see [DeepDriver project](https://github.com/jochem725/deepdriver).
+The DeepRacer Web Server ROS package creates the *web_publisher_node* which is part of the DeepDriver project and will be launched from the deepdriver_launcher. For more information about the DeepDriver project, see [DeepDriver project](https://github.com/jochem725/deepdriver).
 
 This node launches a Flask application as a background thread and creates service clients and subscribers for all the services and topics that are required by the APIs called from the DeepRacer vehicle console. This node acts as an interface between the AWS DeepRacer device console and the backend ROS services. This node was extended to provide more functionalities required for the DeepDriver project.
 

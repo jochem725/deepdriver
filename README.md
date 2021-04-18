@@ -109,11 +109,11 @@ To launch the DeepDriver sample application as root user on the AWS DeepRacer de
 
 1. Launch the nodes required for traffic project:
 
-        ros2 launch traffic_launcher traffic_launcher.py
+        ros2 launch deepdriver_launcher deepdriver_launcher.py
 
 ### Enabling "traffic" mode using CLI:
 
-Once the traffic_launcher has been kicked-off, open up a adjacent new terminal as root user:
+Once the deepdriver_launcher has been kicked-off, open up a adjacent new terminal as root user:
 
 1. Switch to root user before you source the ROS2 installation:
 
@@ -140,7 +140,7 @@ Once the traffic_launcher has been kicked-off, open up a adjacent new terminal a
         ros2 service call /ctrl_pkg/enable_state deepracer_interfaces_pkg/srv/EnableStateSrv "{is_active: True}"
 ## Launch Files
 
-The traffic_launcher.py included in this package is the main launcher file that launches all the required nodes for the DeepDriver project. This launcher file also includes the nodes from the AWS DeepRacer core application.
+The deepdriver_launcher.py included in this package is the main launcher file that launches all the required nodes for the DeepDriver project. This launcher file also includes the nodes from the AWS DeepRacer core application.
 
         from launch import LaunchDescription
         from launch_ros.actions import Node
