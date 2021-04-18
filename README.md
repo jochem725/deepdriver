@@ -111,7 +111,7 @@ To launch the DeepDriver sample application as root user on the AWS DeepRacer de
 
         ros2 launch deepdriver_launcher deepdriver_launcher.py
 
-### Enabling "traffic" mode using CLI:
+### Enabling "deepdriver" mode using CLI:
 
 Once the deepdriver_launcher has been kicked-off, open up a adjacent new terminal as root user:
 

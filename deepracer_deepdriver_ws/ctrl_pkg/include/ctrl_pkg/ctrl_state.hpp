@@ -209,14 +209,14 @@ namespace SysCtrl
         bool isActive_;
     };
 
-    class TrafficDriveCtrl : public CtrlStateBase
+    class DeepDriverDriveCtrl : public CtrlStateBase
     {
         /// Control state for DeepDriver driving mode.
     public:
         /// @param nodeHdl Reference to the node handler of the control node.
         /// @param subName Topic to subscribe to for servo messages.
-        TrafficDriveCtrl(std::shared_ptr<rclcpp::Node> ctrlNodePtr, const std::string &subName);
-        virtual ~TrafficDriveCtrl() = default;
+        DeepDriverDriveCtrl(std::shared_ptr<rclcpp::Node> ctrlNodePtr, const std::string &subName);
+        virtual ~DeepDriverDriveCtrl() = default;
 
         virtual void servoCB(const deepracer_interfaces_pkg::msg::ServoCtrlMsg::SharedPtr msg) override;
         virtual bool loadModelReq(int requestSeqNum, std::string modelName, std::vector<int> modelMetadataSensors,

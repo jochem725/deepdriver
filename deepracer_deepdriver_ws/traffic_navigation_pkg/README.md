@@ -119,7 +119,7 @@ A launch file called traffic_navigation_pkg_launch.py is included in this packag
 
 | Topic Name | Message Type | Description |
 | ---------- | ------------ | ----------- |
-|traffic_drive|ServoCtrlMsg|This message is used to send motor throttle and servo steering angle ratios with respect to the device calibration. It can also be used to send raw PWM values for angle and throttle.|
+|deepdriver_drive|ServoCtrlMsg|This message is used to send motor throttle and servo steering angle ratios with respect to the device calibration. It can also be used to send raw PWM values for angle and throttle.|
 
 #### Services
 

@@ -14,7 +14,7 @@
 #   limitations under the License.                                              #
 #################################################################################
 
-ACTION_PUBLISH_TOPIC = "traffic_drive"
+ACTION_PUBLISH_TOPIC = "deepdriver_drive"
 SET_MAX_SPEED_SERVICE_NAME = "set_max_speed"
 
 TRAFFIC_SIGN_PKG_NS = "/traffic_sign_pkg"

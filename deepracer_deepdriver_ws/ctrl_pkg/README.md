@@ -4,7 +4,7 @@
 
 The DeepRacer Control ROS package creates the *ctrl_node* which is part of the DeepDriver and will be launched from the deepdriver_launcher. This package was extended and modified from the DeepRacer Control ROS package developed for the core application. For more information about the DeepDriver project, see [DeepDriver](https://github.com/jochem725/deepdriver).
 
-This is the main node with services exposed to be used by webserver backend API calls. This node in the AWS DeepRacer application manages the different mode of the device [manual, autonomous, calibration]. It allows us to maintain the device in a single mode at any point of time so that the overlapping functionalities (like servo messages, etc) are not conflicting each other. In this package, an additional mode **traffic** has been added to support the DeepDriver project.
+This is the main node with services exposed to be used by webserver backend API calls. This node in the AWS DeepRacer application manages the different mode of the device [manual, autonomous, calibration]. It allows us to maintain the device in a single mode at any point of time so that the overlapping functionalities (like servo messages, etc) are not conflicting each other. In this package, an additional mode **deepdriver** has been added to support the DeepDriver project.
 
 ## License
 
@@ -125,7 +125,7 @@ The ctrl_node provides the core functionality to manage the different modes of o
 | /deepracer_navigation_pkg/auto_drive | ServoCtrlMsg | Message with scaled steering angle and throttle data as per action space values sent to the servo package to move the car in autonomous mode. |
 | /webserver_pkg/calibration_drive | ServoCtrlMsg | Message with raw pwm values for steering angle and throttle data sent to the servo package to calibrate the car in calibration mode. |
 | /webserver_pkg/manual_drive | ServoCtrlMsg | Message with steering angle and throttle data sent to the servo package to move the car in manual mode. |
-| /traffic_navigation_pkg/traffic_drive | ServoCtrlMsg | Message with steering angle and throttle data sent to the servo package to move the car in traffic mode. |
+| /traffic_navigation_pkg/deepdriver_drive | ServoCtrlMsg | Message with steering angle and throttle data sent to the servo package to move the car in traffic mode. |
 
 #### Published Topics
 

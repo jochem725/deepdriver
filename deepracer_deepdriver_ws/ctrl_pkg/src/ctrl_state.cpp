@@ -631,7 +631,7 @@ namespace SysCtrl
         RCLCPP_ERROR(ctrlNode->get_logger(), "Cannot set constant throttle in calibration mode");
     }
 
-    TrafficDriveCtrl::TrafficDriveCtrl(std::shared_ptr<rclcpp::Node> ctrlNodePtr, const std::string &subName)
+    DeepDriverDriveCtrl::DeepDriverDriveCtrl(std::shared_ptr<rclcpp::Node> ctrlNodePtr, const std::string &subName)
         : isActive_(false)
     {
         ctrlNode = ctrlNodePtr;
@@ -643,7 +643,7 @@ namespace SysCtrl
 
         servoSub_ = ctrlNode->create_subscription<deepracer_interfaces_pkg::msg::ServoCtrlMsg>(subName,
                                                                                                qos,
-                                                                                               std::bind(&TrafficDriveCtrl::servoCB,
+                                                                                               std::bind(&DeepDriverDriveCtrl::servoCB,
                                                                                                          this,
                                                                                                          std::placeholders::_1),
                                                                                                rclcpp::SubscriptionOptions(),
@@ -656,7 +656,7 @@ namespace SysCtrl
         waitForService(servoGPIOClient_, ctrlNode);
     }
 
-    void TrafficDriveCtrl::servoCB(const deepracer_interfaces_pkg::msg::ServoCtrlMsg::SharedPtr msg)
+    void DeepDriverDriveCtrl::servoCB(const deepracer_interfaces_pkg::msg::ServoCtrlMsg::SharedPtr msg)
     {
         if (!isActive_ || !servoPub_)
         {
@@ -668,10 +668,10 @@ namespace SysCtrl
         servoPub_->publish(std::move(servoMsg)); // Publish it along.
     }
 
-    bool TrafficDriveCtrl::loadModelReq(int requestSeqNum, std::string modelName, std::vector<int> modelMetadataSensors,
-                                        int trainingAlgorithm, int actionSpaceType, std::string imgFormat,
-                                        int width, int height, int numChannels,
-                                        int lidarChannels, int platform, int task, int preProcess)
+    bool DeepDriverDriveCtrl::loadModelReq(int requestSeqNum, std::string modelName, std::vector<int> modelMetadataSensors,
+                                           int trainingAlgorithm, int actionSpaceType, std::string imgFormat,
+                                           int width, int height, int numChannels,
+                                           int lidarChannels, int platform, int task, int preProcess)
     {
         (void)requestSeqNum;
         (void)modelName;
@@ -690,7 +690,7 @@ namespace SysCtrl
         return false;
     }
 
-    void TrafficDriveCtrl::setStateActive(bool isActive)
+    void DeepDriverDriveCtrl::setStateActive(bool isActive)
     {
         isActive_ = isActive;
         // Stop car and straighten wheels when starting or stopping this state
@@ -701,33 +701,33 @@ namespace SysCtrl
         enableGPIO(servoGPIOClient_);
     }
 
-    std::string TrafficDriveCtrl::getLoadModelStatus()
+    std::string DeepDriverDriveCtrl::getLoadModelStatus()
     {
         RCLCPP_ERROR(ctrlNode->get_logger(), "Cannot get load model status in follow the leader mode.");
         return "error";
     }
 
-    void TrafficDriveCtrl::getCalibration(int type, std::vector<int> &cal)
+    void DeepDriverDriveCtrl::getCalibration(int type, std::vector<int> &cal)
     {
         (void)type;
         (void)cal;
         RCLCPP_ERROR(ctrlNode->get_logger(), "Calibration information not available in follow the leader mode");
     }
 
-    void TrafficDriveCtrl::setCalibration(int type, const std::vector<int> &cal)
+    void DeepDriverDriveCtrl::setCalibration(int type, const std::vector<int> &cal)
     {
         (void)type;
         (void)cal;
         RCLCPP_ERROR(ctrlNode->get_logger(), "Cannot set calibrations in follow the leader mode");
     }
 
-    void TrafficDriveCtrl::getLedValue(std::vector<int> &ledValuesMap)
+    void DeepDriverDriveCtrl::getLedValue(std::vector<int> &ledValuesMap)
     {
         (void)ledValuesMap;
         RCLCPP_ERROR(ctrlNode->get_logger(), "Cannot get LED values in follow the leader mode");
     }
 
-    void TrafficDriveCtrl::setLedValue(int redPwm, int greenPwm, int bluePwm)
+    void DeepDriverDriveCtrl::setLedValue(int redPwm, int greenPwm, int bluePwm)
     {
         (void)redPwm;
         (void)greenPwm;
@@ -735,7 +735,7 @@ namespace SysCtrl
         RCLCPP_ERROR(ctrlNode->get_logger(), "Cannot set LED values in follow the leader mode");
     }
 
-    void TrafficDriveCtrl::setConstantThrottle(float throttle)
+    void DeepDriverDriveCtrl::setConstantThrottle(float throttle)
     {
         (void)throttle;
         RCLCPP_ERROR(ctrlNode->get_logger(), "Cannot set constant throttle in follow the leader mode");
