@@ -2,7 +2,7 @@
 
 ## Overview
 
-The DeepRacer Control ROS package creates the *ctrl_node* which is part of the DeepDriver and will be launched from the traffic_launcher. This package was extended and modified from the DeepRacer Control ROS package developed for the core application. For more information about the DeepDriver project, see [DeepDriver](https://github.com/jochem725/aws-deepracer-traffic-sim).
+The DeepRacer Control ROS package creates the *ctrl_node* which is part of the DeepDriver and will be launched from the traffic_launcher. This package was extended and modified from the DeepRacer Control ROS package developed for the core application. For more information about the DeepDriver project, see [DeepDriver](https://github.com/jochem725/deepdriver).
 
 This is the main node with services exposed to be used by webserver backend API calls. This node in the AWS DeepRacer application manages the different mode of the device [manual, autonomous, calibration]. It allows us to maintain the device in a single mode at any point of time so that the overlapping functionalities (like servo messages, etc) are not conflicting each other. In this package, an additional mode **traffic** has been added to support the DeepDriver project.
 
@@ -14,7 +14,7 @@ The source code is released under [Apache 2.0](https://aws.amazon.com/apache-2-0
 
 ### Prerequisites
 
-The AWS DeepRacer device comes with all the pre-requisite packages and libraries installed to run the DeepDriver project. More details about pre installed set of packages and libraries on the DeepRacer, and installing required build systems can be found in the [Getting Started](https://github.com/awsdeepracer/aws-deepracer-launcher/blob/main/getting-started.md) section of the AWS DeepRacer Opensource page.
+The AWS DeepRacer device comes with all the pre-requisite packages and libraries installed to run the DeepDriver project. More details about pre installed set of packages and libraries on the DeepRacer, and installing required build systems can be found in the [Getting Started](https://github.com/aws-deepracer/aws-deepracer-launcher/blob/main/getting-started.md) section of the AWS DeepRacer Opensource page.
 
 The ctrl_pkg specifically depends on the following ROS2 packages as build and execute dependencies:
 
@@ -50,22 +50,22 @@ Open up a terminal on the DeepRacer device and run the following commands as roo
 
 2. Clone the entire DeepDriver project on the DeepRacer device.
 
-        git clone https://github.com/jochem725/aws-deepracer-traffic-sim.git
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/
+        git clone https://github.com/jochem725/deepdriver.git
+        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/
 
 3. Fetch unreleased dependencies:
 
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/
+        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/
         rosws update
 
 4. Resolve the dependencies:
 
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/ && apt-get update
+        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/ && apt-get update
         rosdep install -i --from-path . --rosdistro foxy -y
 
 5. Build the ctrl_pkg, camera_pkg, servo_pkg, inference_pkg, model_optimizer_pkg, deepracer_navigation_pkg and deepracer_interfaces_pkg:
 
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/ && colcon build --packages-select ctrl_pkg camera_pkg servo_pkg inference_pkg model_optimizer_pkg deepracer_navigation_pkg deepracer_interfaces_pkg
+        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/ && colcon build --packages-select ctrl_pkg camera_pkg servo_pkg inference_pkg model_optimizer_pkg deepracer_navigation_pkg deepracer_interfaces_pkg
 
 
 ## Usage
@@ -82,7 +82,7 @@ To launch the built ctrl_node as root user on the AWS DeepRacer device open up a
 
 1. Navigate to the DeepDriver workspace:
 
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/
+        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/
 
 1. Source the ROS2 Foxy setup bash script:
 
@@ -90,7 +90,7 @@ To launch the built ctrl_node as root user on the AWS DeepRacer device open up a
 
 1. Source the setup script for the installed packages:
 
-        source ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/install/setup.bash 
+        source ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/install/setup.bash 
 
 1. Launch the ctrl_node using the launch script:
 
@@ -167,5 +167,5 @@ The ctrl_node provides the core functionality to manage the different modes of o
 
 ## Resources
 
-* AWS DeepRacer Opensource getting started: [https://github.com/awsdeepracer/aws-deepracer-launcher/blob/main/getting-started.md](https://github.com/awsdeepracer/aws-deepracer-launcher/blob/main/getting-started.md)
-* DeepDriver project getting started: [https://github.com/jochem725/aws-deepracer-traffic-sim/blob/main/getting-started.md](https://github.com/jochem725/aws-deepracer-traffic-sim/blob/main/getting-started.md)
+* AWS DeepRacer Opensource getting started: [https://github.com/aws-deepracer/aws-deepracer-launcher/blob/main/getting-started.md](https://github.com/aws-deepracer/aws-deepracer-launcher/blob/main/getting-started.md)
+* DeepDriver project getting started: [https://github.com/jochem725/deepdriver/blob/main/getting-started.md](https://github.com/jochem725/deepdriver/blob/main/getting-started.md)

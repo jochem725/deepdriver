@@ -39,13 +39,6 @@ def generate_launch_description():
             {"DEVICE": "CPU", "PUBLISH_DISPLAY_OUTPUT": publish_display_output}
         ],
     )
-    # line_detection_node = Node(
-    #     package="line_detection_pkg",
-    #     namespace="line_detection_pkg",
-    #     executable="line_detection_node",
-    #     name="line_detection_node",
-    #     parameters=[{"PUBLISH_DISPLAY_OUTPUT": publish_display_output}],
-    # )
     traffic_navigation_node = Node(
         package="traffic_navigation_pkg",
         namespace="traffic_navigation_pkg",
@@ -171,7 +164,6 @@ def generate_launch_description():
     )
     ld.add_action(traffic_sign_node)
     ld.add_action(object_detection_node)
-    # ld.add_action(line_detection_node)
     ld.add_action(traffic_navigation_node)
     ld.add_action(camera_node)
     ld.add_action(ctrl_node)

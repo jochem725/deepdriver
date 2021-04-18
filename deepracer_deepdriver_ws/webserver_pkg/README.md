@@ -2,7 +2,7 @@
 
 ## Overview
 
-The DeepRacer Web Server ROS package creates the *web_publisher_node* which is part of the DeepDriver project and will be launched from the traffic_launcher. For more information about the DeepDriver project, see [DeepDriver project](https://github.com/jochem725/aws-deepracer-traffic-sim).
+The DeepRacer Web Server ROS package creates the *web_publisher_node* which is part of the DeepDriver project and will be launched from the traffic_launcher. For more information about the DeepDriver project, see [DeepDriver project](https://github.com/jochem725/deepdriver).
 
 This node launches a Flask application as a background thread and creates service clients and subscribers for all the services and topics that are required by the APIs called from the DeepRacer vehicle console. This node acts as an interface between the AWS DeepRacer device console and the backend ROS services. This node was extended to provide more functionalities required for the DeepDriver project.
 
@@ -14,7 +14,7 @@ The source code is released under [Apache 2.0](https://aws.amazon.com/apache-2-0
 
 ### Prerequisites
 
-The AWS DeepRacer device comes with all the pre-requisite packages and libraries installed to run the DeepDriver project. More details about pre installed set of packages and libraries on the DeepRacer, and installing required build systems can be found in the [Getting Started](https://github.com/awsdeepracer/aws-deepracer-launcher/blob/main/getting-started.md) section of the AWS DeepRacer Opensource page.
+The AWS DeepRacer device comes with all the pre-requisite packages and libraries installed to run the DeepDriver project. More details about pre installed set of packages and libraries on the DeepRacer, and installing required build systems can be found in the [Getting Started](https://github.com/aws-deepracer/aws-deepracer-launcher/blob/main/getting-started.md) section of the AWS DeepRacer Opensource page.
 
 The webserver_pkg specifically depends on the following ROS2 packages as build and execute dependencies:
 
@@ -45,22 +45,22 @@ Open up a terminal on the DeepRacer device and run the following commands as roo
 
 1. Clone the entire DeepDriver project on the DeepRacer device.
 
-        git clone https://github.com/jochem725/aws-deepracer-traffic-sim.git
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/
+        git clone https://github.com/jochem725/deepdriver.git
+        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/
 
 1. Fetch unreleased dependencies:
 
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/
+        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/
         rosws update
 
 1. Resolve the dependencies:
 
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/ && apt-get update
+        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/ && apt-get update
         rosdep install -i --from-path . --rosdistro foxy -y
 
 1. Build the webserver_pkg, ctrl_pkg, sensor_fusion_pkg, deepracer_systems_pkg, device_info_pkg, i2c_pkg and deepracer_interfaces_pkg:
 
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/ && colcon build --packages-select webserver_pkg ctrl_pkg sensor_fusion_pkg deepracer_systems_pkg device_info_pkg i2c_pkg deepracer_interfaces_pkg
+        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/ && colcon build --packages-select webserver_pkg ctrl_pkg sensor_fusion_pkg deepracer_systems_pkg device_info_pkg i2c_pkg deepracer_interfaces_pkg
 
 
 ## Usage
@@ -77,7 +77,7 @@ To launch the built webserver_publisher_node as root user on the AWS DeepRacer d
 
 1. Navigate to the DeepDriver  workspace:
 
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/
+        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/
 
 1. Source the ROS2 Foxy setup bash script:
 
@@ -85,7 +85,7 @@ To launch the built webserver_publisher_node as root user on the AWS DeepRacer d
 
 1. Source the setup script for the installed packages:
 
-        source ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/install/setup.bash 
+        source ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/install/setup.bash 
 
 2. Launch the webserver_publisher_node using the launch script:
 
@@ -156,5 +156,5 @@ The webserver_publisher_node provides the core functionality to launch the FLASK
 
 ## Resources
 
-* AWS DeepRacer Opensource getting started: [https://github.com/awsdeepracer/aws-deepracer-launcher/blob/main/getting-started.md](https://github.com/awsdeepracer/aws-deepracer-launcher/blob/main/getting-started.md)
-* DeepDriver  project getting started: [https://github.com/jochem725/aws-deepracer-traffic-sim/blob/main/getting-started.md](https://github.com/jochem725/aws-deepracer-traffic-sim/blob/main/getting-started.md)
+* AWS DeepRacer Opensource getting started: [https://github.com/aws-deepracer/aws-deepracer-launcher/blob/main/getting-started.md](https://github.com/aws-deepracer/aws-deepracer-launcher/blob/main/getting-started.md)
+* DeepDriver  project getting started: [https://github.com/jochem725/deepdriver/blob/main/getting-started.md](https://github.com/jochem725/deepdriver/blob/main/getting-started.md)

@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Object Detection ROS package creates the object_detection_node which is responsible for collecting sensor data (camera images) from sensor_fusion_pkg and running them through the object detection model. It was modified from the [Follow the Leader(FTL) sample project](https://github.com/awsdeepracer/aws-deepracer-follow-the-leader-sample-project) to support multiple object detection and to communicate the results in the form of label and boundary box. Thisresults is published using a ROS publisher as InferResultsArray data. For more information about the DeepDriver project, see [DeepDriver](https://github.com/jochem725/aws-deepracer-traffic-sim).
+The Object Detection ROS package creates the object_detection_node which is responsible for collecting sensor data (camera images) from sensor_fusion_pkg and running them through the object detection model. It was modified from the [Follow the Leader(FTL) sample project](https://github.com/aws-deepracer/aws-deepracer-follow-the-leader-sample-project) to support multiple object detection and to communicate the results in the form of label and boundary box. Thisresults is published using a ROS publisher as InferResultsArray data. For more information about the DeepDriver project, see [DeepDriver](https://github.com/jochem725/deepdriver).
 
 ## License
 
@@ -12,7 +12,7 @@ The source code is released under [Apache 2.0](https://aws.amazon.com/apache-2-0
 
 ### Prerequisites
 
-The AWS DeepRacer device comes with all the pre-requisite packages and libraries installed to run the DeepDriver project. More details about pre installed set of packages and libraries on the DeepRacer, and installing required build systems can be found in the [Getting Started](https://github.com/awsdeepracer/aws-deepracer-launcher/blob/main/getting-started.md) section of the AWS DeepRacer Opensource page.
+The AWS DeepRacer device comes with all the pre-requisite packages and libraries installed to run the DeepDriver project. More details about pre installed set of packages and libraries on the DeepRacer, and installing required build systems can be found in the [Getting Started](https://github.com/aws-deepracer/aws-deepracer-launcher/blob/main/getting-started.md) section of the AWS DeepRacer Opensource page.
 
 The object_detection_pkg specifically depends on the following ROS2 packages as build and execute dependencies:
 
@@ -20,7 +20,7 @@ The object_detection_pkg specifically depends on the following ROS2 packages as 
 
 The following are the additional software and hardware requirements to get the object_detection_node to work on the AWS DeepRacer device. 
 
-1. **Download and Optimize the object detection model:** Follow the [instructions](https://github.com/awsdeepracer/aws-deepracer-follow-the-leader-sample-project/blob/main/download-and-convert-object-detection-model.md) to download and optimize the object detection model and copy it to required location on the AWS DeepRacer device.
+1. **Download and Optimize the object detection model:** Follow the [instructions](https://github.com/aws-deepracer/aws-deepracer-follow-the-leader-sample-project/blob/main/download-and-convert-object-detection-model.md) to download and optimize the object detection model and copy it to required location on the AWS DeepRacer device.
 
 1. **Setup Intel Neural Compute Stick 2 (optional):** The object_detection_node provides functionality to offload the inference to a Intel Neural Compute Stick 2 connected to the AWS DeepRacer device. This is an optional setting that is included to enhance the inference performance of the object detection model. More details about running Inference on the Movidius NCS (Neural Compute Stick) with OpenVINO™ toolkit can be found here: https://www.youtube.com/watch?v=XPvMrGobe7I
 
@@ -62,22 +62,22 @@ Open up a terminal on the DeepRacer device and run the following commands as roo
 
 1. Clone the entire DeepDriver project on the DeepRacer device.
 
-        git clone https://github.com/awsdeepracer/aws-deepracer-follow-the-leader-sample-project.git
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/
+        git clone https://github.com/aws-deepracer/aws-deepracer-follow-the-leader-sample-project.git
+        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/
 
 1. Fetch unreleased dependencies:
 
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/
+        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/
         rosws update
 
 1. Resolve the dependencies:
 
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/ && apt-get update
+        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/ && apt-get update
         rosdep install -i --from-path . --rosdistro foxy -y
 
 1. Build the object_detection_pkg and deepracer_interfaces_pkg:
 
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/ && colcon build --packages-select object_detection_pkg deepracer_interfaces_pkg
+        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/ && colcon build --packages-select object_detection_pkg deepracer_interfaces_pkg
 
 
 ## Usage
@@ -94,7 +94,7 @@ Configure the launch file to specify which device to use for inference (for more
 
 1. Navigate to the Follow the Leader(FTL) workspace:
 
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/
+        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/
 
 1. Source the ROS2 Foxy setup bash and OpenVINO bash script:
 
@@ -103,7 +103,7 @@ Configure the launch file to specify which device to use for inference (for more
 
 1. Source the setup script for the installed packages:
 
-        source ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/install/setup.bash 
+        source ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/install/setup.bash 
 
 1. Launch the object_detection_node using the launch script:
 
@@ -160,6 +160,6 @@ A launch file called object_detection_pkg_launch.py is included in this package 
 
 ## Resources
 
-* AWS DeepRacer Opensource getting started: [https://github.com/awsdeepracer/aws-deepracer-launcher/blob/main/getting-started.md](https://github.com/awsdeepracer/aws-deepracer-launcher/blob/main/getting-started.md)
-* DeepDriver project getting started: [https://github.com/jochem725/aws-deepracer-traffic-sim/blob/main/getting-started.md](https://github.com/jochem725/aws-deepracer-traffic-sim/blob/main/getting-started.md)
-* Instructions to download and optimize the object detection model: [https://github.com/awsdeepracer/aws-deepracer-follow-the-leader-sample-project/blob/main/download-and-convert-object-detection-model.md](https://github.com/awsdeepracer/aws-deepracer-follow-the-leader-sample-project/blob/main/download-and-convert-object-detection-model.md)
+* AWS DeepRacer Opensource getting started: [https://github.com/aws-deepracer/aws-deepracer-launcher/blob/main/getting-started.md](https://github.com/aws-deepracer/aws-deepracer-launcher/blob/main/getting-started.md)
+* DeepDriver project getting started: [https://github.com/jochem725/deepdriver/blob/main/getting-started.md](https://github.com/jochem725/deepdriver/blob/main/getting-started.md)
+* Instructions to download and optimize the object detection model: [https://github.com/aws-deepracer/aws-deepracer-follow-the-leader-sample-project/blob/main/download-and-convert-object-detection-model.md](https://github.com/aws-deepracer/aws-deepracer-follow-the-leader-sample-project/blob/main/download-and-convert-object-detection-model.md)

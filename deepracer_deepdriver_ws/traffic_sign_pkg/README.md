@@ -2,7 +2,7 @@
 
 ## Overview
 
-The DeepDriver Traffic Sign ROS package creates the traffic_sign_node which interprets traffic lights and signs detected by the object_detection_node. For more information about the DeepDriver project, see [DeepDriver project](https://github.com/jochem725/aws-deepracer-traffic-sim).
+The DeepDriver Traffic Sign ROS package creates the traffic_sign_node which interprets traffic lights and signs detected by the object_detection_node. For more information about the DeepDriver project, see [DeepDriver project](https://github.com/jochem725/deepdriver).
 
 ## License
 
@@ -12,7 +12,7 @@ The source code is released under [Apache 2.0](https://aws.amazon.com/apache-2-0
 
 ### Prerequisites
 
-The DeepDriver project is a sample application built on top of the existing AWS DeepRacer application uses object detection machine learning model through which the AWS DeepRacer device can identify and interpret traffic signs. For detailed information on DeepDriver project, see DeepDriver project [Getting Started](https://github.com/jochem725/aws-deepracer-traffic-sim/blob/main/getting-started.md) section.
+The DeepDriver project is a sample application built on top of the existing AWS DeepRacer application uses object detection machine learning model through which the AWS DeepRacer device can identify and interpret traffic signs. For detailed information on DeepDriver project, see DeepDriver project [Getting Started](https://github.com/jochem725/deepdriver/blob/main/getting-started.md) section.
 
 The traffic_sign_pkg specifically depends on the following ROS2 packages as build and execute dependencies:
 
@@ -41,22 +41,22 @@ Open up a terminal on the DeepRacer device and run the following commands as roo
 
 2. Clone the entire DeepDriver project on the DeepRacer device.
 
-        git clone https://github.com/jochem725/aws-deepracer-traffic-sim.git
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/
+        git clone https://github.com/jochem725/deepdriver.git
+        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/
 
 3. Fetch unreleased dependencies:
 
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/
+        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/
         rosws update
 
 4. Resolve the dependencies:
 
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/ && apt-get update
+        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/ && apt-get update
         rosdep install -i --from-path . --rosdistro foxy -y
 
 5. Build the traffic_sign_pkg and deepracer_interfaces_pkg:
 
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/ && colcon build --packages-select traffic_sign_pkg deepracer_interfaces_pkg
+        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/ && colcon build --packages-select traffic_sign_pkg deepracer_interfaces_pkg
 
 
 ## Usage
@@ -73,7 +73,7 @@ To launch the built traffic_sign_node as root user on the DeepRacer device open 
 
 2. Navigate to the DeepDriver workspace:
 
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/
+        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/
 
 3. Source the ROS2 Foxy setup bash script:
 
@@ -81,7 +81,7 @@ To launch the built traffic_sign_node as root user on the DeepRacer device open 
 
 4. Source the setup script for the installed packages:
 
-        source ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/install/setup.bash 
+        source ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/install/setup.bash 
 
 5. Launch the traffic_sign_node using the launch script:
 
@@ -123,5 +123,5 @@ A launch file called traffic_sign_pkg_launch.py is included in this package that
 
 ## Resources
 
-* AWS DeepRacer Opensource getting started: [https://github.com/awsdeepracer/aws-deepracer-launcher/blob/main/getting-started.md](https://github.com/awsdeepracer/aws-deepracer-launcher/blob/main/getting-started.md)
-* DeepDriver project getting started: [https://github.com/jochem725/aws-deepracer-traffic-sim/blob/main/getting-started.md](https://github.com/jochem725/aws-deepracer-traffic-sim/blob/main/getting-started.md)
+* AWS DeepRacer Opensource getting started: [https://github.com/aws-deepracer/aws-deepracer-launcher/blob/main/getting-started.md](https://github.com/aws-deepracer/aws-deepracer-launcher/blob/main/getting-started.md)
+* DeepDriver project getting started: [https://github.com/jochem725/deepdriver/blob/main/getting-started.md](https://github.com/jochem725/deepdriver/blob/main/getting-started.md)

@@ -2,7 +2,7 @@
 
 ## Overview
 
-The DeepRacer Interfaces ROS package is a foundational package that creates the custom service and message types that are used in the core AWS DeepRacer application. Here we have extended and modified the package to support the DeepDriver project. These services and messages defined are shared across the packages that are part of the AWS DeepRacer application and the DeepDriver project. For more information about the DeepDriver project, see [DeepDriver](https://github.com/jochem725/aws-deepracer-traffic-sim).
+The DeepRacer Interfaces ROS package is a foundational package that creates the custom service and message types that are used in the core AWS DeepRacer application. Here we have extended and modified the package to support the DeepDriver project. These services and messages defined are shared across the packages that are part of the AWS DeepRacer application and the DeepDriver project. For more information about the DeepDriver project, see [DeepDriver](https://github.com/jochem725/deepdriver).
 
 ## License
 
@@ -12,7 +12,7 @@ The source code is released under [Apache 2.0](https://aws.amazon.com/apache-2-0
 
 ### Prerequisites
 
-The AWS DeepRacer device comes with all the pre-requisite packages and libraries installed to run the DeepDriver project. More details about pre installed set of packages and libraries on the DeepRacer, and installing required build systems can be found in the [Getting Started](https://github.com/awsdeepracer/aws-deepracer-launcher/blob/main/getting-started.md) section of the AWS DeepRacer Opensource page.
+The AWS DeepRacer device comes with all the pre-requisite packages and libraries installed to run the DeepDriver project. More details about pre installed set of packages and libraries on the DeepRacer, and installing required build systems can be found in the [Getting Started](https://github.com/aws-deepracer/aws-deepracer-launcher/blob/main/getting-started.md) section of the AWS DeepRacer Opensource page.
 
 The deepracer_inferfaces_pkg specifically depends on the following ROS2 packages as build and execute dependencies:
 
@@ -42,18 +42,18 @@ Open up a terminal on the DeepRacer device and run the following commands as roo
 
 2. Clone the entire DeepDriver project on the DeepRacer device.
 
-        git clone https://github.com/jochem725/aws-deepracer-traffic-sim.git
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/
+        git clone https://github.com/jochem725/deepdriver.git
+        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/
 
 3. Resolve the dependencies:
 
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/ && rosdep install -i --from-path . --rosdistro foxy -y
+        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/ && rosdep install -i --from-path . --rosdistro foxy -y
 
 4. Build the deepracer_interfaces_pkg:
 
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/ && colcon build --packages-select deepracer_interfaces_pkg
+        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/ && colcon build --packages-select deepracer_interfaces_pkg
 
 ## Resources
 
-* AWS DeepRacer Opensource getting started: [https://github.com/awsdeepracer/aws-deepracer-launcher/blob/main/getting-started.md](https://github.com/awsdeepracer/aws-deepracer-launcher/blob/main/getting-started.md)
-* DeepDriver project getting started: [https://github.com/jochem725/aws-deepracer-traffic-sim/blob/main/getting-started.md](https://github.com/jochem725/aws-deepracer-traffic-sim/blob/main/getting-started.md)
+* AWS DeepRacer Opensource getting started: [https://github.com/aws-deepracer/aws-deepracer-launcher/blob/main/getting-started.md](https://github.com/aws-deepracer/aws-deepracer-launcher/blob/main/getting-started.md)
+* DeepDriver project getting started: [https://github.com/jochem725/deepdriver/blob/main/getting-started.md](https://github.com/jochem725/deepdriver/blob/main/getting-started.md)

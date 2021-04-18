@@ -2,7 +2,7 @@
 
 ## Overview
 
-The DeepDriver project is a sample application built on top of the existing AWS DeepRacer application uses object detection machine learning model through which the AWS DeepRacer device can identify and interpret traffic signs. For detailed information on DeepDriver project, see DeepDriver project [Getting Started](https://github.com/jochem725/aws-deepracer-traffic-sim/blob/main/getting-started.md) section.
+The DeepDriver project is a sample application built on top of the existing AWS DeepRacer application uses object detection machine learning model through which the AWS DeepRacer device can identify and interpret traffic signs. For detailed information on DeepDriver project, see DeepDriver project [Getting Started](https://github.com/jochem725/deepdriver/blob/main/getting-started.md) section.
 
 ## License
 
@@ -12,11 +12,11 @@ The source code is released under [Apache 2.0](https://aws.amazon.com/apache-2-0
 
 ### Prerequisites
 
-The AWS DeepRacer device comes with all the pre-requisite packages and libraries installed to run the DeepDriver project. More details about pre installed set of packages and libraries on the DeepRacer, and installing required build systems can be found in the [Getting Started](https://github.com/awsdeepracer/aws-deepracer-launcher/blob/main/getting-started.md) section of the AWS DeepRacer Opensource page. DeepDriver project requires the AWS DeepRacer application to be installed on the device as it leverages most of the packages from the core application.
+The AWS DeepRacer device comes with all the pre-requisite packages and libraries installed to run the DeepDriver project. More details about pre installed set of packages and libraries on the DeepRacer, and installing required build systems can be found in the [Getting Started](https://github.com/aws-deepracer/aws-deepracer-launcher/blob/main/getting-started.md) section of the AWS DeepRacer Opensource page. DeepDriver project requires the AWS DeepRacer application to be installed on the device as it leverages most of the packages from the core application.
 
 The following are the additional software and hardware requirements to get the DeepDriver project to work on the AWS DeepRacer device.
 
-1. **Download and Optimize the object detection model:** Follow the [instructions](https://github.com/jochem725/aws-deepracer-traffic-sim/blob/main/download-and-convert-object-detection-model.md) to download and optimize the object detection model and copy it to the required location on the AWS DeepRacer device.
+1. **Download and Optimize the object detection model:** Follow the [instructions](https://github.com/jochem725/deepdriver/blob/main/download-and-convert-object-detection-model.md) to download and optimize the object detection model and copy it to the required location on the AWS DeepRacer device.
 
 1. **Calibrate the AWS DeepRacer (optional):** Follow the [instructions](https://docs.aws.amazon.com/deepracer/latest/developerguide/deepracer-calibrate-vehicle.html) to calibrate the mechanics of your AWS DeepRacer Vehicle. This should be done so that the vehicle performance is optimal and it behaves as expected.
 
@@ -64,25 +64,25 @@ Open up a terminal on the DeepRacer device and run the following commands as roo
 
 1. Clone the entire DeepDriver project on the DeepRacer device.
 
-        git clone https://github.com/jochem725/aws-deepracer-traffic-sim.git
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/
+        git clone https://github.com/jochem725/deepdriver.git
+        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/
 
 1. Clone the async_web_server_cpp, web_video_server and rplidar_ros dependency packages on the DeepRacer device:
 
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/ && ./install_dependencies.sh
+        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/ && ./install_dependencies.sh
 
 1. Fetch unreleased dependencies:
 
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/
+        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/
         rosws update
 
 1. Resolve the dependencies:
 
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/ && rosdep install -i --from-path . --rosdistro foxy -y
+        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/ && rosdep install -i --from-path . --rosdistro foxy -y
 
 1. Build the packages in the workspace
 
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/ && colcon build
+        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/ && colcon build
 
 
 ## Usage
@@ -105,7 +105,7 @@ To launch the DeepDriver sample application as root user on the AWS DeepRacer de
 
 1. Source the setup script for the installed packages:
 
-        source cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/install/setup.bash
+        source cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/install/setup.bash
 
 1. Launch the nodes required for traffic project:
 
@@ -121,7 +121,7 @@ Once the traffic_launcher has been kicked-off, open up a adjacent new terminal a
 
 1. Navigate to the DeepDriver workspace:
 
-        cd ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/
+        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/
 
 1. Source the ROS2 Foxy setup bash script:
 
@@ -129,7 +129,7 @@ Once the traffic_launcher has been kicked-off, open up a adjacent new terminal a
 
 1. Source the setup script for the installed packages:
 
-        source ~/deepracer_ws/aws-deepracer-traffic-sim/deepracer_deepdriver_ws/install/setup.bash
+        source ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/install/setup.bash
 
 2. Set the mode of the DeepRacer via ctrl_pkg to "traffic" using the below ros2 service call:
 
@@ -320,7 +320,7 @@ Applies to the object_detection_node
 
 ## Resources
 
-* AWS DeepRacer Opensource getting started: [https://github.com/awsdeepracer/aws-deepracer-launcher/blob/main/getting-started.md](https://github.com/awsdeepracer/aws-deepracer-launcher/blob/main/getting-started.md)
-* DeepDriver project getting started: [https://github.com/jochem725/aws-deepracer-traffic-sim/blob/main/getting-started.md](https://github.com/jochem725/aws-deepracer-traffic-sim/blob/main/getting-started.md)
-* Instructions to download and optimize the object detection model: [https://github.com/jochem725/aws-deepracer-traffic-sim/blob/main/download-and-convert-object-detection-model.md](https://github.com/jochem725/aws-deepracer-traffic-sim/blob/main/download-and-convert-object-detection-model.md)
+* AWS DeepRacer Opensource getting started: [https://github.com/aws-deepracer/aws-deepracer-launcher/blob/main/getting-started.md](https://github.com/aws-deepracer/aws-deepracer-launcher/blob/main/getting-started.md)
+* DeepDriver project getting started: [https://github.com/jochem725/deepdriver/blob/main/getting-started.md](https://github.com/jochem725/deepdriver/blob/main/getting-started.md)
+* Instructions to download and optimize the object detection model: [https://github.com/jochem725/deepdriver/blob/main/download-and-convert-object-detection-model.md](https://github.com/jochem725/deepdriver/blob/main/download-and-convert-object-detection-model.md)
 * Instructions to calibrate your AWS DeepRacer: [https://docs.aws.amazon.com/deepracer/latest/developerguide/deepracer-calibrate-vehicle.html](https://docs.aws.amazon.com/deepracer/latest/developerguide/deepracer-calibrate-vehicle.html)

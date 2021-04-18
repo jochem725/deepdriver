@@ -20,10 +20,6 @@ SET_MAX_SPEED_SERVICE_NAME = "set_max_speed"
 TRAFFIC_SIGN_PKG_NS = "/traffic_sign_pkg"
 TRAFFIC_SIGN_RESULTS_TOPIC = f"{TRAFFIC_SIGN_PKG_NS}/traffic_sign_results"
 
-LINE_PKG_NS = "/line_detection_pkg"
-LINE_RESULTS_TOPIC = f"{LINE_PKG_NS}/line_results"
-
-
 OBJECT_DETECTION_PKG_NS = "/object_detection_pkg"
 OBJECT_DETECTION_INFERENCE_TOPIC = f"{OBJECT_DETECTION_PKG_NS}/inference_results"
 

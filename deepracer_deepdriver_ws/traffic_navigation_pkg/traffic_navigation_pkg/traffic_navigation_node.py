@@ -40,7 +40,7 @@ from rclpy.node import Node
 from rclpy.executors import MultiThreadedExecutor
 from rclpy.qos import QoSProfile, QoSHistoryPolicy, QoSReliabilityPolicy
 from rclpy.callback_groups import MutuallyExclusiveCallbackGroup
-from deepracer_interfaces_pkg.msg import ServoCtrlMsg, TrafficMsg, LineDeltaMsg
+from deepracer_interfaces_pkg.msg import ServoCtrlMsg, TrafficMsg
 from deepracer_interfaces_pkg.srv import SetMaxSpeedSrv, SetLedCtrlSrv
 from traffic_navigation_pkg import constants, utils, control_utils
 
@@ -89,14 +89,6 @@ class TrafficNavigationNode(Node):
             self.traffic_msg_cb,
             qos_profile,
         )
-
-        # Create subscription to line detections from the line detection node.
-        # self.line_direction_subscriber = self.create_subscription(
-        #     LineDeltaMsg,
-        #     constants.LINE_RESULTS_TOPIC,
-        #     self.line_msg_cb,
-        #     qos_profile,
-        # )
 
         self.lock = threading.Lock()
 
@@ -316,7 +308,7 @@ class TrafficNavigationNode(Node):
 
     def main_loop(self):
         """Function which runs in a separate thread and decides the actions
-        the car should take based on the input from the line_detection_pkg.
+        the car should take based on the input from the traffic signs node.
         """
 
         msg = ServoCtrlMsg()
