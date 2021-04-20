@@ -37,7 +37,7 @@ namespace SysCtrl
 #define AUTO_DRIVE_TOPIC "/deepracer_navigation_pkg/auto_drive"
 #define MANUAL_DRIVE_TOPIC "/webserver_pkg/manual_drive"
 #define CALIBRATION_DRIVE_TOPIC "/webserver_pkg/calibration_drive"
-#define TRAFFIC_DRIVE_TOPIC "/traffic_navigation_pkg/traffic_drive"
+#define DEEPDRIVER_DRIVE_TOPIC "/deepdriver_navigation_pkg/deepdriver_drive"
 
     /// Available states.
     enum CtrlState
@@ -45,7 +45,7 @@ namespace SysCtrl
         manual,
         autonomous,
         calibration,
-        traffic,
+        deepdriver,
         numStates
     };
 
@@ -175,7 +175,7 @@ namespace SysCtrl
                 stateList_ = {{autonomous, std::make_shared<SysCtrl::AutoDriveCtrl>(this->shared_from_this(), AUTO_DRIVE_TOPIC)},
                               {manual, std::make_shared<SysCtrl::ManualDriveCtrl>(this->shared_from_this(), MANUAL_DRIVE_TOPIC)},
                               {calibration, std::make_shared<SysCtrl::CalibrationCtrl>(this->shared_from_this(), CALIBRATION_DRIVE_TOPIC)},
-                              {traffic, std::make_shared<SysCtrl::TrafficDriveCtrl>(this->shared_from_this(), TRAFFIC_DRIVE_TOPIC)}};
+                              {deepdriver, std::make_shared<SysCtrl::TrafficDriveCtrl>(this->shared_from_this(), DEEPDRIVER_DRIVE_TOPIC)}};
                 activeState_ = stateList_.find(manual);
                 activeState_->second->setStateActive(true);
                 initialized_ = true;

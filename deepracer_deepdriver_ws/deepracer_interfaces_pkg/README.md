@@ -21,8 +21,6 @@ The deepracer_inferfaces_pkg specifically depends on the following ROS2 packages
 3. *sensor_msgs* - This package defines messages for commonly used sensors, including cameras and scanning laser rangefinders.
 4. *std_msgs* - Standard ROS Messages including common message types representing primitive data types and other basic message constructs, such as multiarrays.
 
-
-
 ## Downloading and Building
 
 Open up a terminal on the DeepRacer device and run the following commands as root user.

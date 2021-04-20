@@ -15,7 +15,7 @@
 #################################################################################
 
 """
-traffic_navigation_node.py
+deepdriver_navigation_node.py
 
 This module decides the action messages (servo control messages specifically angle
 and throttle) to be sent out using the detection deltas from object_detection_node.
@@ -42,18 +42,18 @@ from rclpy.qos import QoSProfile, QoSHistoryPolicy, QoSReliabilityPolicy
 from rclpy.callback_groups import MutuallyExclusiveCallbackGroup
 from deepracer_interfaces_pkg.msg import ServoCtrlMsg, TrafficMsg
 from deepracer_interfaces_pkg.srv import SetMaxSpeedSrv, SetLedCtrlSrv
-from traffic_navigation_pkg import constants, utils, control_utils
+from deepdriver_navigation_pkg import constants, utils, control_utils
 
 
-class TrafficNavigationNode(Node):
+class DeepDriverNavigationNode(Node):
     """Node responsible for deciding the action messages (servo control messages specifically angle
     and throttle) to be sent out using the detection deltas from object_detection_node.
     """
 
     def __init__(self, qos_profile):
-        """Create a TrafficNavigationNode."""
-        super().__init__("traffic_navigation_node")
-        self.get_logger().info("traffic_navigation_node started.")
+        """Create a DeepDriverNavigationNode."""
+        super().__init__("deepdriver_navigation_node")
+        self.get_logger().info("deepdriver_navigation_node started.")
 
         # Double buffer to hold the input inferences from object detection.
         self.sign_msg_buffer = utils.DoubleBuffer(clear_data_on_get=True)
@@ -362,7 +362,7 @@ def main(args=None):
     )
 
     try:
-        traffic_navigation_node = TrafficNavigationNode(qos)
+        deepdriver_navigation_node = DeepDriverNavigationNode(qos)
         executor = MultiThreadedExecutor()
 
         def signal_handler(signum, frame):
@@ -372,24 +372,24 @@ def main(args=None):
                 signum: The signal number.
                 frame: the current stack frame (None or a frame object).
             """
-            traffic_navigation_node.get_logger().info("Signal Handler initiated")
-            traffic_navigation_node.thread_shutdown()
-            traffic_navigation_node.wait_for_thread()
+            deepdriver_navigation_node.get_logger().info("Signal Handler initiated")
+            deepdriver_navigation_node.thread_shutdown()
+            deepdriver_navigation_node.wait_for_thread()
 
         # Register SIGINT handler
         signal.signal(signal.SIGINT, signal_handler)
-        rclpy.spin(traffic_navigation_node, executor)
+        rclpy.spin(deepdriver_navigation_node, executor)
     except Exception as ex:
-        traffic_navigation_node.get_logger().error(
-            f"Exception in TrafficNavigationNode: {ex}"
+        deepdriver_navigation_node.get_logger().error(
+            f"Exception in DeepDriverNavigationNode: {ex}"
         )
-        traffic_navigation_node.destroy_node()
+        deepdriver_navigation_node.destroy_node()
         rclpy.shutdown()
 
     # Destroy the node explicitly
     # (optional - otherwise it will be done automatically
     # when the garbage collector destroys the node object)
-    traffic_navigation_node.destroy_node()
+    deepdriver_navigation_node.destroy_node()
     rclpy.shutdown()
 
 

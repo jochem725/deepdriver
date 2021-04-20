@@ -56,9 +56,9 @@ DEEPRACER_NAVIGATION_PKG_NS = "/deepracer_navigation_pkg"
 LOAD_ACTION_SPACE_SERVICE = f"{DEEPRACER_NAVIGATION_PKG_NS}/load_action_space"
 NAVIGATION_THROTTLE_SERVICE = f"{DEEPRACER_NAVIGATION_PKG_NS}/navigation_throttle"
 
-# traffic_navigation_pkg
-TRAFFIC_NAVIGATION_PKG_NS = "/traffic_navigation_pkg"
-TRAFFIC_SET_MAX_SPEED_SERVICE = f"{TRAFFIC_NAVIGATION_PKG_NS}/set_max_speed"
+# deepdriver_navigation_pkg
+deepdriver_navigation_pkg_NS = "/deepdriver_navigation_pkg"
+TRAFFIC_SET_MAX_SPEED_SERVICE = f"{deepdriver_navigation_pkg_NS}/set_max_speed"
 
 # deepracer_systems_pkg
 DEEPRACER_SYSTEMS_PKG_NS = "/deepracer_systems_pkg"
@@ -183,19 +183,15 @@ SLEEP_TIME_BEFORE_REBOOT = SOFTWARE_UPDATE_FETCH_FREQUENCY + 1
 INVALID_ENUM_VALUE = 0
 
 # Mapping the various modes for the vehicle in ctrl_pkg
-MODE_DICT = {
-    0: "manual",
-    1: "autonomous",
-    2: "calibration",
-    3: "traffic"
-}
+MODE_DICT = {0: "manual", 1: "autonomous", 2: "calibration", 3: "traffic"}
 
 
 class SensorInputKeys(Enum):
     """Enum mapping sensor inputs keys(str) passed in model_metadata.json to int values,
-       as we add sensors we should add inputs. This is also important for networks
-       with more than one input.
+    as we add sensors we should add inputs. This is also important for networks
+    with more than one input.
     """
+
     observation = 1
     LIDAR = 2
     SECTOR_LIDAR = 3
@@ -225,14 +221,13 @@ SENSOR_INPUT_NAME_MAPPING = {
     SensorInputKeys.LEFT_CAMERA: "Left camera",
     SensorInputKeys.FRONT_FACING_CAMERA: "Front-facing camera",
     SensorInputKeys.STEREO_CAMERAS: "Stereo camera",
-    INVALID_ENUM_VALUE: "--"
-
+    INVALID_ENUM_VALUE: "--",
 }
 
 
 class TrainingAlgorithms(Enum):
-    """Enum mapping training algorithm value passed in model_metadata.json to int values.
-    """
+    """Enum mapping training algorithm value passed in model_metadata.json to int values."""
+
     clipped_ppo = 1
     sac = 2
 
@@ -254,13 +249,13 @@ class TrainingAlgorithms(Enum):
 TRAINING_ALGORITHM_NAME_MAPPING = {
     TrainingAlgorithms.clipped_ppo: "Clipped PPO",
     TrainingAlgorithms.sac: "Soft actor critic",
-    INVALID_ENUM_VALUE: "--"
+    INVALID_ENUM_VALUE: "--",
 }
 
 
 class ActionSpaceTypes(Enum):
-    """Enum mapping action space type value passed in model_metadata.json to int values.
-    """
+    """Enum mapping action space type value passed in model_metadata.json to int values."""
+
     discrete = 1
     continuous = 2
 
@@ -282,13 +277,13 @@ class ActionSpaceTypes(Enum):
 ACTION_SPACE_TYPE_NAME_MAPPING = {
     ActionSpaceTypes.continuous: "Continuous",
     ActionSpaceTypes.discrete: "Discrete",
-    INVALID_ENUM_VALUE: "--"
+    INVALID_ENUM_VALUE: "--",
 }
 
 
-class ModelMetadataKeys():
-    """Class with keys in the model metadata.json
-    """
+class ModelMetadataKeys:
+    """Class with keys in the model metadata.json"""
+
     SENSOR = "sensor"
     LIDAR_CONFIG = "lidar_config"
     USE_LIDAR = "use_lidar"
@@ -321,7 +316,7 @@ DEFAULT_LIDAR_CONFIG = {
     ModelMetadataKeys.NUM_LIDAR_VALUES: 64,
     # Number of lidar sectors to feed into network
     ModelMetadataKeys.NUM_LIDAR_SECTORS: 64,
-    LIDAR_PREPROCESS_KEY: 0
+    LIDAR_PREPROCESS_KEY: 0,
 }
 
 # Default Sector Lidar configuration values
@@ -335,5 +330,5 @@ DEFAULT_SECTOR_LIDAR_CONFIG = {
     ModelMetadataKeys.NUM_LIDAR_VALUES: 64,
     # Number of lidar sectors to feed into network
     ModelMetadataKeys.NUM_LIDAR_SECTORS: 8,
-    LIDAR_PREPROCESS_KEY: 1
+    LIDAR_PREPROCESS_KEY: 1,
 }

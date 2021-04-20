@@ -119,7 +119,7 @@ A launch file called traffic_sign_pkg_launch.py is included in this package that
 
 | Topic Name | Message Type | Description |
 | ---------- | ------------ | ----------- |
-|traffic_sign_results|TrafficSign|Message with detected traffic signs that can be used as input for navigation actions.|
+|traffic_sign_results|TrafficMsg|Message with detected traffic signs and lights that can be used as input for navigation actions.|
 
 ## Resources
 

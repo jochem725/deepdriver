@@ -2,7 +2,7 @@
 
 ## Overview
 
-The DeepRacer Web Server ROS package creates the *web_publisher_node* which is part of the DeepDriver project and will be launched from the traffic_launcher. For more information about the DeepDriver project, see [DeepDriver project](https://github.com/jochem725/deepdriver).
+The DeepRacer Web Server ROS package creates the *web_publisher_node* which is part of the DeepDriver project and will be launched from the deepdriver_launcher. For more information about the DeepDriver project, see [DeepDriver project](https://github.com/jochem725/deepdriver).
 
 This node launches a Flask application as a background thread and creates service clients and subscribers for all the services and topics that are required by the APIs called from the DeepRacer vehicle console. This node acts as an interface between the AWS DeepRacer device console and the backend ROS services. This node was extended to provide more functionalities required for the DeepDriver project.
 
@@ -151,7 +151,7 @@ The webserver_publisher_node provides the core functionality to launch the FLASK
 | /deepracer_systems_pkg/begin_update | BeginSoftwareUpdateSrv | Client to the begin update service to trigger the update of the aws-deepracer debian packages to the latest software version available. |
 | /deepracer_systems_pkg/software_update_state | SoftwareUpdateStateSrv | Client to software update state service to get the current software update state from the states [ UPDATE_UNKNOWN, UP_TO_DATE, UPDATE_AVAILABLE, UPDATE_PENDING, UPDATE_IN_PROGRESS ]. |
 | /ctrl_pkg/autonomous_throttle | NavThrottleSrv | Client to autonomous throttle service to set the scale value to multiply to the throttle during autonomous navigation. |
-| /traffic_navigation_pkg/set_max_speed | SetMaxSpeedSrv | Client to set DeepDriver max speed percentage scale value during DeepDriver navigation. |
+| /deepdriver_navigation_pkg/set_max_speed | SetMaxSpeedSrv | Client to set DeepDriver max speed percentage scale value during DeepDriver navigation. |
 | /deepracer_systems_pkg/get_otg_link_state | OTGLinkStateSrv | Client to the get otg link state service to get the current connection status of micro-USB cable to the DeepRacer device. |
 
 ## Resources

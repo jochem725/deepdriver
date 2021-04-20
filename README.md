@@ -109,11 +109,11 @@ To launch the DeepDriver sample application as root user on the AWS DeepRacer de
 
 1. Launch the nodes required for traffic project:
 
-        ros2 launch traffic_launcher traffic_launcher.py
+        ros2 launch deepdriver_launcher deepdriver_launcher.py
 
 ### Enabling "traffic" mode using CLI:
 
-Once the traffic_launcher has been kicked-off, open up a adjacent new terminal as root user:
+Once the deepdriver_launcher has been kicked-off, open up a adjacent new terminal as root user:
 
 1. Switch to root user before you source the ROS2 installation:
 
@@ -140,7 +140,7 @@ Once the traffic_launcher has been kicked-off, open up a adjacent new terminal a
         ros2 service call /ctrl_pkg/enable_state deepracer_interfaces_pkg/srv/EnableStateSrv "{is_active: True}"
 ## Launch Files
 
-The traffic_launcher.py included in this package is the main launcher file that launches all the required nodes for the DeepDriver project. This launcher file also includes the nodes from the AWS DeepRacer core application.
+The deepdriver_launcher.py included in this package is the main launcher file that launches all the required nodes for the DeepDriver project. This launcher file also includes the nodes from the AWS DeepRacer core application.
 
         from launch import LaunchDescription
         from launch_ros.actions import Node
@@ -162,11 +162,11 @@ The traffic_launcher.py included in this package is the main launcher file that 
                 name="object_detection_node",
                 parameters=[{"DEVICE": "CPU", "PUBLISH_DISPLAY_OUTPUT": True}],
             )
-            traffic_navigation_node = Node(
-                package="traffic_navigation_pkg",
-                namespace="traffic_navigation_pkg",
-                executable="traffic_navigation_node",
-                name="traffic_navigation_node",
+            deepdriver_navigation_node = Node(
+                package="deepdriver_navigation_pkg",
+                namespace="deepdriver_navigation_pkg",
+                executable="deepdriver_navigation_node",
+                name="deepdriver_navigation_node",
             )
             camera_node = Node(
                 package="camera_pkg",
@@ -287,7 +287,7 @@ The traffic_launcher.py included in this package is the main launcher file that 
             )
             ld.add_action(traffic_sign_node)
             ld.add_action(object_detection_node)
-            ld.add_action(traffic_navigation_node)
+            ld.add_action(deepdriver_navigation_node)
             ld.add_action(camera_node)
             ld.add_action(ctrl_node)
             ld.add_action(deepracer_navigation_node)

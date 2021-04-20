@@ -109,11 +109,11 @@ To launch the DeepDriver sample application as root user on the AWS DeepRacer de
 
 1. Launch the nodes required for traffic project:
 
-        ros2 launch traffic_launcher traffic_launcher.py
+        ros2 launch deepdriver_launcher deepdriver_launcher.py
 
 ### Enabling "traffic" mode using CLI:
 
-Once the traffic_launcher has been kicked-off, open up a adjacent new terminal as root user:
+Once the deepdriver_launcher has been kicked-off, open up a adjacent new terminal as root user:
 
 1. Switch to root user before you source the ROS2 installation:
 
@@ -140,33 +140,38 @@ Once the traffic_launcher has been kicked-off, open up a adjacent new terminal a
         ros2 service call /ctrl_pkg/enable_state deepracer_interfaces_pkg/srv/EnableStateSrv "{is_active: True}"
 ## Launch Files
 
-The traffic_launcher.py included in this package is the main launcher file that launches all the required nodes for the DeepDriver project. This launcher file also includes the nodes from the AWS DeepRacer core application.
+The deepdriver_launcher.py included in this package is the main launcher file that launches all the required nodes for the DeepDriver project. This launcher file also includes the nodes from the AWS DeepRacer core application.
 
         from launch import LaunchDescription
         from launch_ros.actions import Node
 
 
         def generate_launch_description():
+            # Set to false to save resources.
+            publish_display_output = True
+
             ld = LaunchDescription()
             traffic_sign_node = Node(
                 package="traffic_sign_pkg",
                 namespace="traffic_sign_pkg",
                 executable="traffic_sign_node",
                 name="traffic_sign_node",
-                parameters=[{"PUBLISH_DISPLAY_OUTPUT": True}],
+                parameters=[{"PUBLISH_DISPLAY_OUTPUT": publish_display_output}],
             )
             object_detection_node = Node(
                 package="object_detection_pkg",
                 namespace="object_detection_pkg",
                 executable="object_detection_node",
                 name="object_detection_node",
-                parameters=[{"DEVICE": "CPU", "PUBLISH_DISPLAY_OUTPUT": True}],
+                parameters=[
+                    {"DEVICE": "CPU", "PUBLISH_DISPLAY_OUTPUT": publish_display_output}
+                ],
             )
-            traffic_navigation_node = Node(
-                package="traffic_navigation_pkg",
-                namespace="traffic_navigation_pkg",
-                executable="traffic_navigation_node",
-                name="traffic_navigation_node",
+            deepdriver_navigation_node = Node(
+                package="deepdriver_navigation_pkg",
+                namespace="deepdriver_navigation_pkg",
+                executable="deepdriver_navigation_node",
+                name="deepdriver_navigation_node",
             )
             camera_node = Node(
                 package="camera_pkg",
@@ -287,7 +292,7 @@ The traffic_launcher.py included in this package is the main launcher file that 
             )
             ld.add_action(traffic_sign_node)
             ld.add_action(object_detection_node)
-            ld.add_action(traffic_navigation_node)
+            ld.add_action(deepdriver_navigation_node)
             ld.add_action(camera_node)
             ld.add_action(ctrl_node)
             ld.add_action(deepracer_navigation_node)
@@ -316,6 +321,12 @@ Applies to the object_detection_node
 | Parameter Name   | Description  |
 | ---------------- |  ----------- |
 | DEVICE (optional) | If set as MYRIAD, will use the Intel Compute Stick 2 for inference. Else uses CPU for inference by default, even if removed. |
+| PUBLISH_DISPLAY_OUTPUT | Set to True/False if the inference output images need to be published to localhost using web_video_server. |
+
+Applies to the traffic_sign_node
+
+| Parameter Name   | Description  |
+| ---------------- |  ----------- |
 | PUBLISH_DISPLAY_OUTPUT | Set to True/False if the inference output images need to be published to localhost using web_video_server. |
 
 ## Resources
