@@ -1,3 +1,5 @@
 .venv
 .vscode
 .flake8
+
+deepdriver_ws/*.sh 
