@@ -105,7 +105,7 @@ To launch the DeepDriver sample application as root user on the AWS DeepRacer de
 
 1. Source the setup script for the installed packages:
 
-        source cd ~/deepracer_ws/deepdriver/deepdriver_ws/install/setup.bash
+        source ~/deepracer_ws/deepdriver/deepdriver_ws/install/setup.bash
 
 1. Launch the nodes required for traffic project:
 
