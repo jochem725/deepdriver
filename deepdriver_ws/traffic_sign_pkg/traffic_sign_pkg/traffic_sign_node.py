@@ -156,7 +156,7 @@ class TrafficSignNode(Node):
                         bounding_box[3] - bounding_box[1]
                     )
                     # Smaller means closer.
-                    distance_approximation = max_bbox_size / bbox_size
+                    distance_approximation = 1.0 - bbox_size / max_bbox_size
 
                     self.get_logger().info(f"Postprocessing {coco_label}")
                     if coco_label == "traffic light":

@@ -127,4 +127,6 @@ RGB_COLOR_MAP = {
 }
 
 # Threshold before the car should take an action.
-DISTANCE_THRESHOLD = 30
+# Distance is approximated by thet traffic sign as 1.0 - obj_bbox / frame_size.
+# The lower the threshold the closer the object needs to be to be detected.
+DISTANCE_THRESHOLD = 0.75
