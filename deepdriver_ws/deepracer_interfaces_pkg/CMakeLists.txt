@@ -45,7 +45,6 @@ set(msg_files
   "msg/TrafficSign.msg"
   "msg/TrafficLight.msg"
   "msg/TrafficMsg.msg"
-  "msg/LineDeltaMsg.msg"
 )
 set(srv_files
   "srv/ActiveStateSrv.srv"
