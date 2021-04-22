@@ -125,7 +125,7 @@ The ctrl_node provides the core functionality to manage the different modes of o
 | /deepracer_navigation_pkg/auto_drive | ServoCtrlMsg | Message with scaled steering angle and throttle data as per action space values sent to the servo package to move the car in autonomous mode. |
 | /webserver_pkg/calibration_drive | ServoCtrlMsg | Message with raw pwm values for steering angle and throttle data sent to the servo package to calibrate the car in calibration mode. |
 | /webserver_pkg/manual_drive | ServoCtrlMsg | Message with steering angle and throttle data sent to the servo package to move the car in manual mode. |
-| /traffic_navigation_pkg/deepdriver_drive | ServoCtrlMsg | Message with steering angle and throttle data sent to the servo package to move the car in traffic mode. |
+| /deepdriver_navigation_pkg/deepdriver_drive | ServoCtrlMsg | Message with steering angle and throttle data sent to the servo package to move the car in traffic mode. |
 
 #### Published Topics
 

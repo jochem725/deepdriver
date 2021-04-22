@@ -56,9 +56,9 @@ DEEPRACER_NAVIGATION_PKG_NS = "/deepracer_navigation_pkg"
 LOAD_ACTION_SPACE_SERVICE = f"{DEEPRACER_NAVIGATION_PKG_NS}/load_action_space"
 NAVIGATION_THROTTLE_SERVICE = f"{DEEPRACER_NAVIGATION_PKG_NS}/navigation_throttle"
 
-# traffic_navigation_pkg
-TRAFFIC_NAVIGATION_PKG_NS = "/traffic_navigation_pkg"
-TRAFFIC_SET_MAX_SPEED_SERVICE = f"{TRAFFIC_NAVIGATION_PKG_NS}/set_max_speed"
+# deepdriver_navigation_pkg
+deepdriver_navigation_PKG_NS = "/deepdriver_navigation_pkg"
+TRAFFIC_SET_MAX_SPEED_SERVICE = f"{deepdriver_navigation_PKG_NS}/set_max_speed"
 
 # deepracer_systems_pkg
 DEEPRACER_SYSTEMS_PKG_NS = "/deepracer_systems_pkg"

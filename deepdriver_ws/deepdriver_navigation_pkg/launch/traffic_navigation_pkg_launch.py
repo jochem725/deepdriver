@@ -20,9 +20,9 @@ from launch_ros.actions import Node
 def generate_launch_description():
     return LaunchDescription([
         Node(
-            package='traffic_navigation_pkg',
-            namespace='traffic_navigation_pkg',
-            executable='traffic_navigation_node',
-            name='traffic_navigation_node'
+            package='deepdriver_navigation_pkg',
+            namespace='deepdriver_navigation_pkg',
+            executable='deepdriver_navigation_node',
+            name='deepdriver_navigation_node'
         )
     ])

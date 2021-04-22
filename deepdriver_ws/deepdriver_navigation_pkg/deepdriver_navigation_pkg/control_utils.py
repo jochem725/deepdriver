@@ -1,5 +1,5 @@
 import math
-from traffic_navigation_pkg import constants
+from deepdriver_navigation_pkg import constants
 
 
 def get_mapped_action(action_category, max_speed_pct):
