@@ -39,11 +39,11 @@ def generate_launch_description():
             {"DEVICE": "CPU", "PUBLISH_DISPLAY_OUTPUT": publish_display_output}
         ],
     )
-    traffic_navigation_node = Node(
-        package="traffic_navigation_pkg",
-        namespace="traffic_navigation_pkg",
-        executable="traffic_navigation_node",
-        name="traffic_navigation_node",
+    deepdriver_navigation_node = Node(
+        package="deepdriver_navigation_pkg",
+        namespace="deepdriver_navigation_pkg",
+        executable="deepdriver_navigation_node",
+        name="deepdriver_navigation_node",
     )
     camera_node = Node(
         package="camera_pkg",
@@ -164,7 +164,7 @@ def generate_launch_description():
     )
     ld.add_action(traffic_sign_node)
     ld.add_action(object_detection_node)
-    ld.add_action(traffic_navigation_node)
+    ld.add_action(deepdriver_navigation_node)
     ld.add_action(camera_node)
     ld.add_action(ctrl_node)
     ld.add_action(deepracer_navigation_node)

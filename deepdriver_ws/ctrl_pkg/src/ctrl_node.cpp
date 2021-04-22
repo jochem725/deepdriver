@@ -37,7 +37,7 @@ namespace SysCtrl
 #define AUTO_DRIVE_TOPIC "/deepracer_navigation_pkg/auto_drive"
 #define MANUAL_DRIVE_TOPIC "/webserver_pkg/manual_drive"
 #define CALIBRATION_DRIVE_TOPIC "/webserver_pkg/calibration_drive"
-#define DEEPDRIVER_DRIVE_TOPIC "/traffic_navigation_pkg/deepdriver_drive"
+#define DEEPDRIVER_DRIVE_TOPIC "/deepdriver_navigation_pkg/deepdriver_drive"
 
     /// Available states.
     enum CtrlState
