@@ -42,21 +42,21 @@ Open up a terminal on the DeepRacer device and run the following commands as roo
 2. Clone the entire DeepDriver project on the DeepRacer device.
 
         git clone https://github.com/jochem725/deepdriver.git
-        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/
+        cd ~/deepracer_ws/deepdriver/deepdriver_ws/
 
 3. Fetch unreleased dependencies:
 
-        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/
+        cd ~/deepracer_ws/deepdriver/deepdriver_ws/
         rosws update
 
 4. Resolve the dependencies:
 
-        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/ && apt-get update
+        cd ~/deepracer_ws/deepdriver/deepdriver_ws/ && apt-get update
         rosdep install -i --from-path . --rosdistro foxy -y
 
 5. Build the traffic_sign_pkg and deepracer_interfaces_pkg:
 
-        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/ && colcon build --packages-select traffic_sign_pkg deepracer_interfaces_pkg
+        cd ~/deepracer_ws/deepdriver/deepdriver_ws/ && colcon build --packages-select traffic_sign_pkg deepracer_interfaces_pkg
 
 
 ## Usage
@@ -73,7 +73,7 @@ To launch the built traffic_sign_node as root user on the DeepRacer device open 
 
 2. Navigate to the DeepDriver workspace:
 
-        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/
+        cd ~/deepracer_ws/deepdriver/deepdriver_ws/
 
 3. Source the ROS2 Foxy setup bash script:
 
@@ -81,7 +81,7 @@ To launch the built traffic_sign_node as root user on the DeepRacer device open 
 
 4. Source the setup script for the installed packages:
 
-        source ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/install/setup.bash 
+        source ~/deepracer_ws/deepdriver/deepdriver_ws/install/setup.bash 
 
 5. Launch the traffic_sign_node using the launch script:
 

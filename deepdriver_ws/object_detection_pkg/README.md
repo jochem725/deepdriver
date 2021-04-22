@@ -63,21 +63,21 @@ Open up a terminal on the DeepRacer device and run the following commands as roo
 1. Clone the entire DeepDriver project on the DeepRacer device.
 
         git clone https://github.com/aws-deepracer/aws-deepracer-follow-the-leader-sample-project.git
-        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/
+        cd ~/deepracer_ws/deepdriver/deepdriver_ws/
 
 1. Fetch unreleased dependencies:
 
-        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/
+        cd ~/deepracer_ws/deepdriver/deepdriver_ws/
         rosws update
 
 1. Resolve the dependencies:
 
-        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/ && apt-get update
+        cd ~/deepracer_ws/deepdriver/deepdriver_ws/ && apt-get update
         rosdep install -i --from-path . --rosdistro foxy -y
 
 1. Build the object_detection_pkg and deepracer_interfaces_pkg:
 
-        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/ && colcon build --packages-select object_detection_pkg deepracer_interfaces_pkg
+        cd ~/deepracer_ws/deepdriver/deepdriver_ws/ && colcon build --packages-select object_detection_pkg deepracer_interfaces_pkg
 
 
 ## Usage
@@ -94,7 +94,7 @@ Configure the launch file to specify which device to use for inference (for more
 
 1. Navigate to the Follow the Leader(FTL) workspace:
 
-        cd ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/
+        cd ~/deepracer_ws/deepdriver/deepdriver_ws/
 
 1. Source the ROS2 Foxy setup bash and OpenVINO bash script:
 
@@ -103,7 +103,7 @@ Configure the launch file to specify which device to use for inference (for more
 
 1. Source the setup script for the installed packages:
 
-        source ~/deepracer_ws/deepdriver/deepracer_deepdriver_ws/install/setup.bash 
+        source ~/deepracer_ws/deepdriver/deepdriver_ws/install/setup.bash 
 
 1. Launch the object_detection_node using the launch script:
 
