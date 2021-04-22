@@ -3,3 +3,4 @@
 .flake8
 
 deepdriver_ws/*.sh 
+!deepdriver_ws/install_dependencies.sh
