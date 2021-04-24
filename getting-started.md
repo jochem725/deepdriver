@@ -72,6 +72,10 @@ Currently the car only drives forward, or stops.
 - Using signs for navigation similar to [the DeepRacer Offroad sample project](https://github.com/aws-deepracer/aws-deepracer-offroad-sample-project)
 - Only drive if the car is on a road
 
+## Demo
+
+![deepdriver-demo](/media/deepdriver-demo.gif)
+
 ## Summary
 
 The Deepdriver project is a modification of the [Follow the Leader(FTL) sample project](https://github.com/aws-deepracer/aws-deepracer-follow-the-leader-sample-project), which leverages most of the concepts used in the AWS DeepRacer application.

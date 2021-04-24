@@ -8,6 +8,10 @@ The DeepDriver project is a sample application built on top of the existing AWS 
 
 The source code is released under [Apache 2.0](https://aws.amazon.com/apache-2-0/).
 
+## Demo
+
+![deepdriver-demo](/media/deepdriver-demo.gif)
+
 ## Installation
 
 ### Prerequisites
