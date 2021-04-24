@@ -132,4 +132,4 @@ RGB_COLOR_MAP = {
 # 1.0 - bounding_box / frame_size
 #
 # The lower this value, the closer the object is to the car.
-DISTANCE_THRESHOLD = 0.9
+DISTANCE_THRESHOLD = 0.95
